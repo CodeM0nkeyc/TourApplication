@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.validation {
+  &-container {
+
+  }
+
+  &-message {
+    color: #d52c2f;
+    padding: 0.5rem;
+  }
+}

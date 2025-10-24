@@ -1,0 +1,20 @@
+@use "../abstracts/variables" as *;
+$flexbox-width: $container-width !default;
+$flexbox-row-gap: 2rem !default;
+$flexbox-column-gap: 2rem !default;
+
+@mixin flexbox-flow($flow, $wrap) {
+  flex-flow: $flow $wrap;
+
+  @if ($flow == column) {
+    row-gap: $flexbox-column-gap;
+  }
+  @else {
+    column-gap: $flexbox-row-gap;
+  }
+}
+
+.flexbox {
+  display: flex;
+  max-width: $flexbox-width;
+}

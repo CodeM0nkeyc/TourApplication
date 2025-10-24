@@ -1,0 +1,22 @@
+<h1 class="sign-up__heading u-margin-b-small">Password</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="sign-up__form">
+  <div>
+    <app-data-input formControlName="password" name="password" placeholder="Some strong password" type="password"
+                    class="shadow-outline">
+      Password*
+    </app-data-input>
+    <app-validation-message [control]="form.controls.password" class="validation-message" />
+  </div>
+
+  <div>
+    <app-data-input formControlName="passwordConfirm" name="passwordConfirm" placeholder="Repeat your password"
+                    type="password" class="shadow-outline u-margin-b-small">
+      Password confirm*
+    </app-data-input>
+    <app-validation-message [control]="form" class="validation-message" />
+  </div>
+
+  <div class="sign-up__buttons">
+    <button app-button class="basic green" type="submit">Sign up</button>
+  </div>
+</form>

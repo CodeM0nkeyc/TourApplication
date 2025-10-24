@@ -1,0 +1,18 @@
+<section class="section-tours">
+  <app-section-heading class="u-center-text u-margin-b-big">
+    Most popular tours
+  </app-section-heading>
+
+  <div class="tours-container u-c-medium-gap u-center-container">
+    @let randIndex = Math.round(Math.random() * 9);
+    @for (tour of tours().slice(randIndex, randIndex + 3); track $index) {
+      <home-tour-card [TourCardVM]="tour" />
+    } @empty {
+      <app-spinner class="u-center-container">Loading tours...</app-spinner>
+    }
+  </div>
+
+  <div class="u-center-text u-margin-t-big">
+    <a href="/catalog" app-button class="basic green">Discover all tours</a>
+  </div>
+</section>

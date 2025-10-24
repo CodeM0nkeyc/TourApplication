@@ -1,0 +1,37 @@
+@use "../abstracts/variables" as *;
+$grid-width: $container-width !default;
+
+.grid {
+  display: grid;
+  max-width: $grid-width;
+
+  &--2-cols {
+    @extend .grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &--3-cols {
+    @extend .grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--4-cols {
+    @extend .grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--dynamic-cols {
+    @extend .grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  }
+
+  &__item {
+    &-justify-right {
+      justify-self: right;
+    }
+
+    &-justify-left {
+      justify-self: left;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@use "variables";
+
+@mixin smooth-transition {
+  backface-visibility: hidden;
+  transition: all 0.5s;
+}
+
+@mixin background-image($color-from, $color-to, $opacity) {
+  background-image: linear-gradient(to right bottom,
+    rgba($color-from, $opacity),
+    rgba($color-to, $opacity));
+}
+
+@mixin scrollbar {
+  overflow: scroll;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}

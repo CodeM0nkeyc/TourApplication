@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\TourBookings\Commands\" />
+      <Folder Include="Features\TourBookings\Queries\" />
+      <Folder Include="Features\Tours\Commands\" />
+      <Folder Include="Features\Users\Specifications\common\" />
+      <Folder Include="Features\Users\Validators\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="FluentValidation" Version="11.11.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TourApp.Domain\TourApp.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

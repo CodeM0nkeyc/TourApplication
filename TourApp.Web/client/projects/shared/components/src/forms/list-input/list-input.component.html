@@ -1,0 +1,37 @@
+<label [for]="inputId" class="data-input-label">
+  <ng-content></ng-content>
+</label>
+
+@if (multipleSelection()) {
+  <ul (click)="onItemCancel($event)" class="list-of-selected">
+    @for (selectedValue of selectedValues(); track $index) {
+      <li [attr.data-key]="selectedValue[0]"
+          [attr.data-value]="selectedValue[1]"
+          class="list-of-selected__item">
+        {{ selectedValue[0] }}
+      </li>
+    }
+  </ul>
+}
+
+<input [id]="inputId" [type]="type()" [placeholder]="placeholder()"
+       [name]="name()" (focus)="onInputFocus($event)" (input)="onInputSearch($event)"
+       (blur)="onInputBlur($event)" class="data-input" #dataInput>
+
+<ul class="data-input-list" #dataList>
+  @for (option of currentOptions(); track option[0]) {
+    <li [attr.data-key]="option[0]"
+        [attr.data-value]="option[1]"
+        [class]="{
+          'data-input-list__option': true,
+          'data-input-list__option--selected': isOptionSelected(option[0])
+        }" (click)="onItemSelect($event)">
+      {{ option[0] }}
+    </li>
+  }
+  @empty {
+    <li class="data-input-list__option">
+      {{ initOptions().size === 0 ? "No options available" : textForEmptySearchResult() }}
+    </li>
+  }
+</ul>

@@ -1,0 +1,20 @@
+<h1 class="sign-in__heading u-margin-b-small">Sign in</h1>
+<form class="sign-in__form">
+  <app-data-input name="email" placeholder="johny@email.com" type="email" class="shadow-outline">
+    Email address
+  </app-data-input>
+
+  <app-data-input name="password" placeholder="secret" type="password" class="shadow-outline u-margin-b-small">
+    Password
+  </app-data-input>
+
+  <div class="sign-in__buttons">
+    <button app-button class="basic green" type="submit">Log in</button>
+    <a app-button class="text" href="#">Forgot password?</a>
+  </div>
+
+  <p class="sign-in__sign-up-text">
+    Don't have an account? Just
+    <a app-button class="text sign-in__sign-up-btn" routerLink="/signup">sign up</a>
+  </p>
+</form>

@@ -1,0 +1,44 @@
+@use "abstracts/all" as *;
+
+:host {
+  display: block;
+}
+
+.section-intro {
+  position: relative;
+  height: 98vh;
+  padding-top: 8rem;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)),
+  url("/home/img/hero.jpg");
+  background-size: cover;
+  background-position: top;
+  clip-path: polygon(0 0, 0 100%, 100% 78vh, 100% 0);
+}
+
+.intro {
+  &__container {
+    position: relative;
+    height: 100%;
+  }
+
+  &__text-box {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+
+.heading-primary {
+  &--main {
+    animation: moveInLeft 1s ease-in-out;
+  }
+
+  &--sub {
+    animation: moveInRight 1s ease-in-out;
+  }
+}

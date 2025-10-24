@@ -1,0 +1,28 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/shared",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "ngx-ui-scroll",
+    "trie-search",
+    "uuid"
+  ],
+  "inlineStyleLanguage": "scss",
+  "assets": [
+    {
+      "input": "src/sass",
+      "glob": "**/*.scss",
+      "ignore": [
+        "styles.scss"
+      ],
+      "output": "assets/style"
+    },
+    {
+      "input": "components/public",
+      "glob": "**/*",
+      "output": "assets"
+    }
+  ]
+}

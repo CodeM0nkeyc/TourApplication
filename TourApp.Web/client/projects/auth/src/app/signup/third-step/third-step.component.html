@@ -1,0 +1,34 @@
+<h1 class="sign-up__heading u-margin-b-small">Address</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="sign-up__form">
+  <div>
+    <app-list-input [initOptions]="countries()" [multipleSelection]="false"
+                    textForEmptySearchResult="Unavailable country"
+                    formControlName="country" name="country" type="text"
+                    class="shadow-outline">
+      Country*
+    </app-list-input>
+    <app-validation-message [control]="form.controls.country" class="validation-message" />
+  </div>
+
+  @if (regionsAvailable()) {
+    <app-list-input @enter [initOptions]="regions()" [multipleSelection]="false"
+                    textForEmptySearchResult="Unavailable region"
+                    formControlName="region" name="region" type="text"
+                    class="shadow-outline">
+      Region
+    </app-list-input>
+  }
+
+  @if (citiesAvailable()) {
+    <app-list-input @enter [initOptions]="cities()" [multipleSelection]="false"
+                    textForEmptySearchResult="Unavailable city"
+                    formControlName="city" name="city" type="text"
+                    class="shadow-outline">
+      City
+    </app-list-input>
+  }
+
+  <div class="sign-up__buttons">
+    <button app-button class="basic green" type="submit">Next &rarr;</button>
+  </div>
+</form>

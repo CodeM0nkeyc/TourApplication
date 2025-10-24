@@ -1,0 +1,13 @@
+﻿GET https://localhost:7136/api/tours?difficulties[0]=easy&difficulties[1]=medium
+
+###
+GET https://localhost:7136/api/tours?pageindex=2
+
+###
+GET https://localhost:7136/api/tours?ordersettings.property=price&ordersettings.descending=true
+
+###
+GET https://localhost:7136/api/tours
+
+###
+GET https://localhost:7136/api/tours/countries

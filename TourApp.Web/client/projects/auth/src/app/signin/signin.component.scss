@@ -1,0 +1,32 @@
+@use "abstracts/variables" as *;
+@use "containers/flex-container" as *;
+
+:host {
+  display: block;
+}
+
+.sign-in {
+  &__heading {
+    text-align: center;
+  }
+
+  &__form {
+    @extend .flexbox;
+    @include flexbox-flow(column, wrap);
+  }
+
+  &__buttons {
+    & button[type="submit"] {
+      width: 15rem;
+      margin-right: 2rem;
+    }
+  }
+
+  &__sign-up-text {
+    text-align: center;
+  }
+
+  &__form &__sign-up-btn {
+    width: fit-content;
+  }
+}

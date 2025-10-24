@@ -1,0 +1,55 @@
+<div class="card__picture">
+  <img [src]="tourCardVM().imageSrc" alt="Tour card image" />
+</div>
+
+<h4 class="card__heading">
+  <span class="card__heading-span card__heading-span--2">
+    {{ tourCardVM().heading }}
+  </span>
+</h4>
+
+<div class="card__body">
+  <p class="card__description">{{ tourCardVM().description }}</p>
+
+  <ul class="card__details u-r-1rem-gap">
+    <li class="card__details-item">
+      <i class="icon-basic-geolocalize-01"></i>
+      <span>{{ tourCardVM().country }}</span>
+    </li>
+    <li class="card__details-item">
+      <i class="icon-basic-calendar"></i>
+      <span>
+        {{ tourCardVM().startDate | date:"longDate" }}
+      </span>
+    </li>
+    <li class="card__details-item">
+      <i class="icon-basic-flag1"></i>
+      <span>{{ tourCardVM().stopCount }} stops</span>
+    </li>
+    <li class="card__details-item">
+      <i class="icon-basic-clock"></i>
+      <span>{{ tourCardVM().durationInDays }} days</span>
+    </li>
+    <li class="card__details-item">
+      <i class="icon-basic-bolt"></i>
+      <span>{{ tourCardVM().difficulty }}</span>
+    </li>
+    <li class="card__details-item">
+      <i class="icon-basic-star"></i>
+      <span>{{ tourCardVM().rating }} rate</span>
+    </li>
+  </ul>
+</div>
+
+<div class="card__footer u-r-small-gap">
+  <div class="card__additional-info">
+    <p class="card__additional-info-data">
+      <strong>${{ tourCardVM().price }}</strong> per person
+    </p>
+    <p class="card__additional-info-data">
+      <strong>{{ tourCardVM().remainingPlaces }}</strong> places left
+    </p>
+  </div>
+
+  <a href="#" app-button class="basic green">Details</a>
+</div>

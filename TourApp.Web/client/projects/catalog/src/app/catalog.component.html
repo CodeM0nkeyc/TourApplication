@@ -1,0 +1,39 @@
+<app-header />
+
+<div class="tour-page-container">
+  @if (isLoading()) {
+    <div class="tour-page__loading-container">
+      <div class="tour-page__loading-display">
+        <app-spinner>Loading tours...</app-spinner>
+      </div>
+    </div>
+  }
+
+  <section class="section-tour-list">
+    <app-section-heading class="u-center-container u-center-text u-margin-b-big">
+      Choose your journey
+    </app-section-heading>
+
+    <div class="tour-list__container u-r-medium-gap u-c-medium-gap
+                u-center-container u-margin-b-big">
+      @for (tourCardVM of tours(); track $index) {
+        <catalog-tour-card [tourCardVM]="tourCardVM"/>
+      }
+      @empty {
+        @if (!isLoading()) {
+          <p class="tour-list__empty">No tours are available</p>
+        }
+      }
+    </div>
+
+    @if (this.tours().length !== 0 && !isLastToursLoaded()) {
+      <div class="tour-list__load-button u-center-container">
+        <button app-button (click)="onLoadMore($event)" class="text">Load more</button>
+      </div>
+    }
+  </section>
+
+  <catalog-filter-panel />
+</div>
+
+<app-footer />

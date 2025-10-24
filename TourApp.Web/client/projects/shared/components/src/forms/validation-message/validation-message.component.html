@@ -1,0 +1,7 @@
+@if (validationMessages().length > 0) {
+  <ul class="validation-container">
+    @for (message of validationMessages(); track $index) {
+      <li class="validation-message">{{ message }}</li>
+    }
+  </ul>
+}

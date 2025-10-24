@@ -1,0 +1,120 @@
+@use "abstracts/variables" as *;
+
+@mixin btn-up($transform-Y) {
+  transform: translateY($transform-Y);
+  box-shadow: 0 1rem 2rem rgba($color-black, 0.15);
+  outline: none;
+}
+
+@mixin btn($v-padding, $h-padding,
+              $text-transform, $border-radius: auto,
+              $width: auto, $height: auto,
+              $font-size: $default-font-size) {
+  width: $width;
+  height: $height;
+  padding: $v-padding $h-padding;
+  font-size: $font-size;
+  text-transform: $text-transform;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  position: relative;
+}
+
+@mixin btn-color($bg-color, $font-color) {
+  background-color: $bg-color;
+  color: $font-color;
+
+  &::after {
+    background-color: $bg-color;
+  }
+}
+
+@mixin btn-basic-animation($transform-Y: -3px) {
+  transition: transform 0.3s;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.5s;
+  }
+
+  &:hover,
+  &:focus {
+    @include btn-up($transform-Y);
+
+    &::after {
+      transform: scaleX(1.3) scaleY(1.6);
+      opacity: 0;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+
+:host(.basic) {
+  @include btn-basic-animation();
+
+  &,
+  &:link,
+  &:visited {
+    @include btn(1.5rem, 4rem, uppercase, 200px);
+  }
+}
+
+:host(.text) {
+  &,
+  &:link,
+  &:visited {
+    @include btn(3px, 3px, none);
+    color: $color-primary;
+    background-color: transparent;
+    border-bottom: 1px solid $color-primary;
+
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      @include btn-up(-2px);
+    }
+
+    &:active {
+      @include btn-up(0);
+    }
+  }
+}
+
+:host(.animated-up) {
+  animation: moveUp 0.5s ease-in-out 0.75s backwards;
+}
+
+:host(.basic.setting) {
+  @extend :host(.basic);
+  padding: 1rem 2rem;
+  text-transform: none;
+}
+
+:host(.basic.white) {
+  @include btn-color($color-white, $color-grey-dark-1);
+}
+
+:host(.basic.green) {
+  @include btn-color($color-primary, $color-white);
+}
+
+:host(.basic.grey) {
+  @include btn-color($color-grey-dark-1, $color-white);
+}

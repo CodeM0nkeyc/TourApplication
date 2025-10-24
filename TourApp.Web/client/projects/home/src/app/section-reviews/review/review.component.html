@@ -1,0 +1,11 @@
+<div class="review u-center-container">
+  <figure class="review__shape">
+    <img class="review__img" src="img/nat-{{ id() }}.jpg" alt="Person on a tour" />
+    <figcaption class="review__caption">
+      <ng-content select="username"></ng-content>
+    </figcaption>
+  </figure>
+  <div class="review__text">
+    <ng-content select="review-text"></ng-content>
+  </div>
+</div>

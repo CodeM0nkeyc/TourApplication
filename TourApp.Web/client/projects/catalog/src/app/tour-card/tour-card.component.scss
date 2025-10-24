@@ -1,0 +1,109 @@
+@use "abstracts/all" as *;
+@use "containers/all" as *;
+
+:host {
+  display: block;
+  position: relative;
+  color: $color-grey-dark-2;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+}
+
+.card {
+  &__picture {
+    height: 23rem;
+    background-image: linear-gradient(to right bottom, #7ED56FFF, #28B485FF);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+
+    & > img {
+      width: 100%;
+      mix-blend-mode: screen;
+    }
+  }
+
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: $color-white;
+    text-transform: uppercase;
+    text-align: right;
+
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+
+    width: 65%;
+  }
+
+  &__heading-span {
+    padding: 1rem 1.5rem;
+    box-decoration-break: clone;
+
+    &--1 {
+      @include background-image($color-secondary-light,
+        $color-secondary-dark,
+        0.85)
+    }
+
+    &--2 {
+      @include background-image($color-primary-light,
+        $color-primary-dark,
+        0.85)
+    }
+
+    &--3 {
+      @include background-image($color-tertiary-light,
+        $color-tertiary-dark,
+        0.85)
+    }
+  }
+
+  &__body {
+    padding: 4rem 3rem 3rem 3rem;
+  }
+
+  &__description {
+    font-size: 1.7rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+
+  &__details {
+    @extend .grid--2-cols;
+
+    list-style: none;
+    justify-content: space-between;
+    font-size: 1.5rem;
+
+    i[class^="icon-"] {
+      display: inline-block;
+      color: $color-primary;
+      margin-right: 1rem;
+      font-size: 2.4rem;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+  }
+
+  &__footer {
+    @extend .flexbox;
+    @include flexbox-flow(row, wrap);
+
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem;
+    background-color: $color-grey-light-1;
+  }
+
+  &__additional-info {
+    &-data {
+      font-size: 1.5rem;
+
+      strong {
+        font-size: 2rem;
+        color: $color-grey-dark-1;
+        font-weight: 700;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@use "abstracts/variables" as *;
+@use "containers/grid" as *;
+
+:host {
+  display: block;
+}
+
+.section-features {
+  padding: 20rem 0;
+  margin-top: -10rem;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)),
+  url("/home/img/nat-4.jpg");
+  background-size: cover;
+  background-position: center;
+
+  transform: skewY(-5deg);
+
+  & > * {
+    transform: skewY(5deg);
+  }
+}
+
+.feature-box {
+  &__container {
+    @extend .grid--4-cols;
+  }
+
+  &__icon {
+    font-size: 6rem;
+    margin-bottom: 0.5rem;
+
+    display: inline-block;
+    background-image: linear-gradient(to right,
+      $color-primary-light,
+      $color-primary-dark);
+    color: transparent;
+    -webkit-background-clip: text;
+  }
+
+  &__text {
+
+  }
+}

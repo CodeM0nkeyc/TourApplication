@@ -1,0 +1,123 @@
+@use "abstracts/variables" as *;
+@use "abstracts/mixins" as *;
+@use "containers/all" as *;
+
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40rem;
+  transition: all 0.5s ease-out;
+
+  &:has(.filter-panel__settings-checkbox > .filter-panel__checkbox-input:not(:checked)) {
+    transform: translateX(34rem);
+  }
+
+  &:has(.filter-panel__settings-checkbox > .filter-panel__checkbox-input:checked) {
+    transform: translateX(0);
+  }
+}
+
+.filter-panel {
+  @extend .grid;
+  grid-template-columns: 5rem 1fr;
+  position: sticky;
+  top: 0;
+  max-height: 100%;
+
+  &__item {
+    &:not(:last-of-type) {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid $color-grey-dark-1;
+    }
+
+    &-heading {
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__container {
+    max-height: 100vh;
+    padding: 3rem 2rem 3rem 2rem;
+    background-color: $color-grey-light-1;
+
+    @include scrollbar;
+    scrollbar-width: none;
+  }
+
+  &__form {
+    @extend .flexbox;
+    @include flexbox-flow(column, wrap);
+  }
+
+  %background-circle {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 200px;
+  }
+
+  &__settings-checkbox {
+    @extend %background-circle;
+    position: relative;
+    background-color: $color-grey-light-2;
+    margin-top: 2rem;
+
+    &::before {
+      @extend %background-circle;
+      background-color: $color-grey-light-2;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      &::before {
+        transform: translate(-50%, -50%) scale(1.6);
+        opacity: 0;
+      }
+    }
+  }
+
+  &__buttons {
+    @extend .flexbox;
+    align-items: center;
+  }
+
+  &__checkbox-input {
+    display: none;
+  }
+
+  &__settings-icon {
+    display: block;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__label {
+    display: block;
+
+    &-checkbox {
+      display: inline-block;
+    }
+  }
+
+  &__price {
+    @extend .flexbox;
+    align-items: center;
+  }
+
+  &__availability-checkbox {
+    margin-right: 0.5rem;
+  }
+}

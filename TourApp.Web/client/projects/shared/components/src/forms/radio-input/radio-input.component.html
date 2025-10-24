@@ -1,0 +1,6 @@
+<input [id]="inputId" [name]="radioGroupName()" [value]="value()"
+       (click)="onRadioClick($event)" type="radio" class="radio-input" #radioInput>
+<label [for]="inputId" class="radio-label">
+  <span class="radio-button"></span>
+  <ng-content></ng-content>
+</label>

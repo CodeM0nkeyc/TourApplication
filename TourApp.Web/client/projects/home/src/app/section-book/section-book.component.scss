@@ -1,0 +1,45 @@
+@use "abstracts/variables" as *;
+@use "containers/flex-container" as *;
+
+:host {
+  display: block;
+}
+
+.section-book {
+  padding: 15rem 0;
+  background-image: linear-gradient(to right bottom,
+    $color-primary-light,
+    $color-primary-dark);
+}
+
+.book {
+  background-image: linear-gradient(105deg,
+    rgba($color-white, 0.9) 0%,
+    rgba($color-white, 0.9) 50%,
+    transparent 50%),
+  url("/home/img/nat-10.jpg");
+
+  background-size: cover;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+  max-width: $container-width;
+
+  &__form {
+    width: 50%;
+    padding: 6rem;
+  }
+}
+
+.form {
+  @extend .flexbox;
+  @include flexbox-flow(column, wrap);
+
+  &__group {
+    @extend .flexbox;
+  }
+
+  &__submit-btn {
+    max-width: 20rem;
+  }
+}

@@ -1,0 +1,6 @@
+<label [for]="inputId" class="data-input-label">
+  <ng-content></ng-content>
+</label>
+<input [id]="inputId" [type]="type()" [placeholder]="placeholder()"
+       [name]="name()" (input)="onInputData($event)" (blur)="onInputBlur($event)"
+       class="data-input" #dataInput>

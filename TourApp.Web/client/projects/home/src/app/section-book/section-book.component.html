@@ -1,0 +1,30 @@
+<section class="section-book">
+  <div class="book u-center-container">
+    <div class="book__form">
+      <app-section-heading class="u-margin-b-medium">
+        Start booking now
+      </app-section-heading>
+
+      <form (ngSubmit)="onSubmit($event)" [formGroup]="form"
+            class="form u-r-small-gap">
+        <app-data-input formControlName="fullName" name="fullname" type="text"
+                        placeholder="Full name" class="dynamic-label show-validation-outline">
+          Full name
+        </app-data-input>
+
+        <app-data-input formControlName="email" name="email" type="email"
+                        placeholder="Email address" class="dynamic-label show-validation-outline">
+          Email address
+        </app-data-input>
+
+        <div class="form__group u-c-medium-gap u-margin-b-small">
+          <app-radio-input formControlName="groupSize" value="small" radioGroupName="groupSize">Small tour
+            group</app-radio-input>
+          <app-radio-input formControlName="groupSize" value="large" radioGroupName="groupSize">Large tour group</app-radio-input>
+        </div>
+
+        <button app-button type="submit" class="basic green form__submit-btn">Next step &rarr;</button>
+      </form>
+    </div>
+  </div>
+</section>

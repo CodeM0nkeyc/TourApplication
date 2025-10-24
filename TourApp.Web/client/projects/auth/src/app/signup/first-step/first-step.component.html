@@ -1,0 +1,23 @@
+<h1 class="sign-up__heading u-margin-b-small">Contacts</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="sign-up__form">
+  <div>
+    <app-data-input formControlName="email" name="email" placeholder="johny@email.com" type="email"
+                    class="shadow-outline show-validation-outline">
+      Email address*
+    </app-data-input>
+    <app-validation-message [control]="form.controls.email" class="validation-message" />
+  </div>
+
+  <div class="u-margin-b-small">
+    <app-data-input formControlName="phoneNumber" fieldCoercion="phoneNumber" name="phoneNumber"
+                    placeholder="xxx xxx xx xx" type="text"
+                    class="shadow-outline show-validation-outline">
+      Phone number
+    </app-data-input>
+    <app-validation-message [control]="form.controls.phoneNumber" class="validation-message" />
+  </div>
+
+  <div class="sign-up__buttons">
+    <button app-button class="basic green" type="submit">Next &rarr;</button>
+  </div>
+</form>
