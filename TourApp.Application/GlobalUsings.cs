@@ -10,9 +10,11 @@ global using Microsoft.Extensions.DependencyInjection;
 
 global using MediatR;
 global using AutoMapper;
+global using FluentValidation;
 global using TourApp.Application.Contracts.Repositories.Base;
 global using TourApp.Application.Features.Tours.Queries;
 global using TourApp.Application.Features.Users.Dto;
+global using TourApp.Application.Features.Users.Specifications;
 global using TourApp.Application.Models;
 global using TourApp.Application.Models.Authentication;
 global using TourApp.Application.Models.Registration;
