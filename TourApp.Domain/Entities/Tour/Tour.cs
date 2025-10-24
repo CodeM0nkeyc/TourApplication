@@ -1,5 +1,4 @@
-﻿using TourApp.Domain.Entities.Base;
-using TourApp.Domain.Entities.Tour.Common;
+﻿using TourApp.Domain.Entities.Tour.Common;
 
 namespace TourApp.Domain.Entities.Tour;
 

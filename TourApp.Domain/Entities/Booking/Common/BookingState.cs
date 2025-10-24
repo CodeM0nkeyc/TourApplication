@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Domain.Entities.Booking.Common;
 
-public enum TourBookingState
+public enum BookingState
 {
     Pending,
     Payed,

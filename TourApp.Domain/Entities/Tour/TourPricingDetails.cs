@@ -1,6 +1,4 @@
-﻿using TourApp.Domain.Entities.Base;
-
-namespace TourApp.Domain.Entities.Tour;
+﻿namespace TourApp.Domain.Entities.Tour;
 
 public class TourPricingDetails : EntityBase<int>
 {

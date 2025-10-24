@@ -1,5 +1,4 @@
-﻿using TourApp.Domain.Entities.Base;
-using TourApp.Domain.Entities.Booking;
+﻿using TourApp.Domain.Entities.Booking;
 
 namespace TourApp.Domain.Entities.User;
 

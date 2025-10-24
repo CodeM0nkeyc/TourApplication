@@ -11,7 +11,7 @@ public class TourBooking : EntityBase<int>
     public int CustomersCount { get; set; }
     
     public decimal Price { get; set; }
-    public TourBookingState State { get; set; }
+    public BookingState State { get; set; }
     
     public Tour.Tour Tour { get; set; }
     

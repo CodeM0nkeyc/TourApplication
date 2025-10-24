@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Domain.Entities.User.Common;
 
-public class AppUserAddress
+public class Address
 {
     public string Country { get; set; }
     public string? Region { get; set; }
