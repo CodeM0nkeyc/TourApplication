@@ -1,4 +1,4 @@
-﻿namespace TourApp.API.Converters;
+﻿namespace TourApp.Web.Converters;
 
 public class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {
