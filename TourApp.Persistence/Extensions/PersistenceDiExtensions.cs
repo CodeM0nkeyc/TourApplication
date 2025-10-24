@@ -1,6 +1,4 @@
-﻿using TourApp.Application.Features.Tours.Contracts.Repositories;
-
-namespace TourApp.Persistence;
+﻿namespace TourApp.Persistence.Extensions;
 
 public static class PersistenceDiExtensions
 {
@@ -10,7 +8,7 @@ public static class PersistenceDiExtensions
         services.AddDbContext<ApplicationDbContext>(opts =>
         {
             opts.UseSqlServer(configuration.GetConnectionString("TourDb") 
-                              ?? throw new InvalidConfigurationException("There is no connection string for TourDb"))
+                              ?? throw new InvalidOperationException("There is no connection string for TourDb"))
                 .EnableSensitiveDataLogging(isDevelopment);
         });
 

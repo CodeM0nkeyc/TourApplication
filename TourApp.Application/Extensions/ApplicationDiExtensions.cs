@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using TourApp.Application.Features.Users.Specifications;
-
-namespace TourApp.Application;
+﻿namespace TourApp.Application.Extensions;
 
 public static class ApplicationDiExtensions
 {
