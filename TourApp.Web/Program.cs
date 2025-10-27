@@ -1,10 +1,15 @@
-using TourApp.Web.Maps;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opts =>
+    {
+        opts.LoginPath = "/auth/signin";
+    });
+
 builder.Services.AddAuthorization();
 
+builder.Services.AddInfrastructure(builder.Configuration.GetSection("Email"));
 builder.Services.AddPersistence(builder.Configuration, builder.Environment.IsDevelopment());
 builder.Services.AddCoreServices();
 
@@ -31,5 +36,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapSpas();
+
+app.Map("/", context =>
+{
+    context.Response.Redirect("/home");
+    return Task.CompletedTask;
+});
 
 app.Run();
