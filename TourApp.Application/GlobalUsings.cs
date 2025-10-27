@@ -17,6 +17,7 @@ global using TourApp.Application.Features.Users.Dto;
 global using TourApp.Application.Features.Users.Specifications;
 global using TourApp.Application.Models;
 global using TourApp.Application.Models.Authentication;
+global using TourApp.Application.Models.Email;
 global using TourApp.Application.Models.Registration;
 global using TourApp.Domain.Entities.Tour;
 global using TourApp.Domain.Entities.User;

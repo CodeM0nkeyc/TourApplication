@@ -1,8 +1,6 @@
-﻿using TourApp.Application.Contracts.Repositories.Base;
+﻿namespace TourApp.Persistence.Repositories;
 
-namespace TourApp.Persistence.Repositories;
-
-public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     protected readonly ApplicationDbContext dbContext;
 
@@ -15,7 +13,6 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
     {
         var result = await dbContext.Set<TEntity>()
             .ApplySpecification(specification)
-            .AsNoTracking()
             .FirstOrDefaultAsync();
 
         return result;
@@ -25,7 +22,6 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
     {
         var result = await dbContext.Set<TEntity>()
             .ApplySpecification(specification)
-            .AsNoTracking()
             .ToListAsync();
 
         return result;
@@ -45,14 +41,24 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
 
     public virtual void Update(TEntity entity)
     {
+        if (dbContext.Entry(entity).State != EntityState.Detached)
+        {
+            return;
+        }
+        
         dbContext.Update(entity);
     }
 
-    public virtual void Update(TEntity entity, params string[] propNames)
+    public virtual void Update(TEntity entity, params string[] props)
     {
+        if (dbContext.Entry(entity).State != EntityState.Detached)
+        {
+            return;
+        }
+        
         dbContext.Attach(entity);
         
-        foreach (string prop in propNames)
+        foreach (var prop in props)
         {
             dbContext.Entry(entity)
                 .Property(prop).IsModified = true;

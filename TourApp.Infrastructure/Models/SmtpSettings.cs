@@ -1,10 +1,10 @@
 ﻿namespace TourApp.Infrastructure.Models;
 
-public record SmtpSettings
+public class SmtpSettings
 {
-    public string Host { get; init; }
-    public int Port { get; init; }
+    public string Host { get; set; }
+    public int Port { get; set; }
     
-    public string Username { get; init; }
-    public string Password { get; init; }
+    public string Username { get; set; }
+    public string Password { get; set; }
 }

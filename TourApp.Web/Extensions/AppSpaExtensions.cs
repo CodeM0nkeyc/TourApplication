@@ -1,4 +1,4 @@
-﻿namespace TourApp.Web.Maps;
+﻿namespace TourApp.Web.Extensions;
 
 public static class AppSpaExtensions
 {

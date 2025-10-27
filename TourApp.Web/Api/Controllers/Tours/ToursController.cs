@@ -1,4 +1,4 @@
-namespace TourApp.API.Controllers.ToursController;
+namespace TourApp.Web.Api.Controllers.Tours;
 
 [Route("api/[controller]")]
 [ApiController]

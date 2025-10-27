@@ -14,6 +14,7 @@ global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using TourApp.Application.Contracts.Repositories.Base;
 global using TourApp.Application.Features.Tours.Contracts.Repositories;
 global using TourApp.Application.Features.Users.Contracts.Repositories;
 global using TourApp.Domain.Entities.Booking;

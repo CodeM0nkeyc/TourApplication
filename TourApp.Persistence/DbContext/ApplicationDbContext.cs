@@ -14,6 +14,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

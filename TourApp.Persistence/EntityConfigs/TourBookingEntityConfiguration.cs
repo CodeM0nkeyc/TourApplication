@@ -19,7 +19,7 @@ public class TourBookingEntityConfiguration : IEntityTypeConfiguration<TourBooki
             .WithMany(x => x.TourBookings);
 
         builder.Property(x => x.State)
-            .HasConversion<EnumToStringConverter<TourBookingState>>()
+            .HasConversion<EnumToStringConverter<BookingState>>()
             .HasColumnType("nvarchar(30)");
 
         builder.Property(x => x.BookingDate)

@@ -1,4 +1,6 @@
-﻿namespace TourApp.Infrastructure.Services.User;
+﻿using TourApp.Application.Features.Users.Specifications.Common;
+
+namespace TourApp.Infrastructure.Services.User;
 
 public class UserService : IUserService
 {
@@ -26,9 +28,14 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> UserExists(string email)
+    public async Task<bool> UserWithEmailExistsAsync(string email)
     {
         return await _userRepository.GetByEmailAsync(email) is not null;
+    }
+    
+    public async Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber)
+    {
+        return await _userRepository.GetByPhoneNumberAsync(phoneNumber) is not null;
     }
 
     public async Task<bool> CheckUniquenessAsync(string email, string? phoneNumber)
@@ -41,6 +48,6 @@ public class UserService : IUserService
         
         int count = await _userRepository.CountAsync(spec);
 
-        return count < 1;
+        return count == 0;
     }
 }

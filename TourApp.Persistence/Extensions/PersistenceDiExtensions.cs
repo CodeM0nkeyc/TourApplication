@@ -12,6 +12,7 @@ public static class PersistenceDiExtensions
                 .EnableSensitiveDataLogging(isDevelopment);
         });
 
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         
