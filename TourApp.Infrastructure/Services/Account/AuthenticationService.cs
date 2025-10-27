@@ -18,21 +18,31 @@ public class AuthenticationService : IAuthenticationService
                && password1.SequenceEqual(password2);
     }
     
-    public async Task<AuthenticationResult> AuthenticateWithPasswordAsync(PasswordAuthenticationRequest request)
+    public async Task<AuthenticationResponse> AuthenticateWithPasswordAsync(AuthenticationRequest request)
     {
-        AppUserIdentity? appUserIdentity = await _userRepository.GetUserIdentityAsync(request.Email);
+        AppUser? appUser = await _userRepository.GetByEmailAsync(request.Email);
 
-        if (appUserIdentity is null)
+        if (appUser is null)
         {
-            return AuthenticationResult.IncorrectEmail;
+            return new AuthenticationResponse(AuthenticationResult.IncorrectEmail);
         }
-
+        
+        AppUserIdentity appUserIdentity = appUser.Identity;
+        
+        if (!appUserIdentity.EmailConfirmed)
+        {
+            return new AuthenticationResponse(AuthenticationResult.NotConfirmed);
+        }
+        
         byte[] requestPasswordBytes = Encoding.ASCII.GetBytes(request.Password);
         byte[] requestPasswordHash = _passwordHashService
             .ComputeHash(requestPasswordBytes, appUserIdentity.PasswordSalt);
 
-        return ComparePasswordBytes(requestPasswordHash, appUserIdentity.PasswordHash) 
+        AuthenticationResult authenticationResult = 
+            ComparePasswordBytes(requestPasswordHash, appUserIdentity.PasswordHash) 
             ? AuthenticationResult.Success
             : AuthenticationResult.IncorrectPassword;
+
+        return new AuthenticationResponse(authenticationResult, appUser.Id, appUser.Role.Name);
     }
 }

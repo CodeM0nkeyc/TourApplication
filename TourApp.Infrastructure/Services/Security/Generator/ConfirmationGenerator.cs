@@ -11,12 +11,4 @@ public class ConfirmationGenerator : IConfirmationGenerator
 
         return code;
     }
-
-    public string GenerateUrlToken()
-    {
-        byte[] tokenBytes = RandomNumberGenerator.GetBytes(64);
-        string token = Base64UrlEncoder.Encode(tokenBytes);
-
-        return token;
-    }
 }

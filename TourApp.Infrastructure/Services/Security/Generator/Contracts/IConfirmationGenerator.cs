@@ -3,5 +3,4 @@
 public interface IConfirmationGenerator
 {
     public int GenerateCode();
-    public string GenerateUrlToken();
 }

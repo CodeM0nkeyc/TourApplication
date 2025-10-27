@@ -4,5 +4,6 @@ public enum AuthenticationResult
 {
     Success,
     IncorrectEmail,
-    IncorrectPassword
+    IncorrectPassword,
+    NotConfirmed
 }

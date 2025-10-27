@@ -8,7 +8,7 @@ public record RegistrationRequest(
     string LastName,
     string? MiddleName,
     
-    AppUserAddress Address,
+    Address Address,
     
     string Password
 );

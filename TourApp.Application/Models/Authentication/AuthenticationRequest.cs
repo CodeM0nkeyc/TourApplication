@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Models.Authentication;
 
-public record PasswordAuthenticationRequest(
+public record AuthenticationRequest(
     string Email,
     string Password
 );
