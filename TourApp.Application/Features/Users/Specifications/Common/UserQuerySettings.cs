@@ -1,4 +1,4 @@
-﻿namespace TourApp.Application.Features.Users.Commands;
+﻿namespace TourApp.Application.Features.Users.Specifications.Common;
 
 public record UserQuerySettings(
     int? Id = null,

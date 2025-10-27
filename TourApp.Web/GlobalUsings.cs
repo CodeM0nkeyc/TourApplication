@@ -1,12 +1,21 @@
 ﻿global using Microsoft.Extensions.FileProviders;
 
 global using System.Globalization;
+global using System.Security.Claims;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using MediatR;
+global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Mvc;
+global using TourApp.Application.Extensions;
 global using TourApp.Application.Features.Tours.Queries;
 global using TourApp.Application.Features.Tours.Queries.GetTourCountries;
 global using TourApp.Application.Features.Tours.Queries.GetTours;
 global using TourApp.Application.Features.Tours.Specifications.Common;
-global using TourApp.Web.Maps;
+global using TourApp.Application.Features.Users.Commands.AuthenticateUser;
+global using TourApp.Application.Models.Authentication;
+global using TourApp.Infrastructure.Extensions;
+global using TourApp.Persistence.Extensions;
+global using TourApp.Web.Converters;
+global using TourApp.Web.Extensions;

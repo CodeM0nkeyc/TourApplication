@@ -1,4 +1,4 @@
-﻿using TourApp.Application.Features.Users.Commands;
+﻿using TourApp.Application.Features.Users.Specifications.Common;
 
 namespace TourApp.Application.Features.Users.Specifications;
 

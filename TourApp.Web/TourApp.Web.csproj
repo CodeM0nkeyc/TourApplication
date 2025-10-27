@@ -14,15 +14,19 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.18" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TourApp.Application\TourApp.Application.csproj" />
+      <ProjectReference Include="..\TourApp.Infrastructure\TourApp.Infrastructure.csproj" />
       <ProjectReference Include="..\TourApp.Persistence\TourApp.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Api\" />
+      <Folder Include="Api\Controllers\Account\" />
       <Folder Include="wwwroot\" />
     </ItemGroup>
 

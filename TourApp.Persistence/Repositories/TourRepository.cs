@@ -1,8 +1,6 @@
-﻿using TourApp.Application.Features.Tours.Contracts.Repositories;
+﻿namespace TourApp.Persistence.Repositories;
 
-namespace TourApp.Persistence.Repositories;
-
-public class TourRepository : GenericRepository<Tour, int>, ITourRepository
+public class TourRepository : GenericRepository<Tour>, ITourRepository
 {
     public TourRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
