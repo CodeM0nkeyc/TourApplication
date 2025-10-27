@@ -6,18 +6,24 @@ public class AppUserIdentityEntityConfiguration : IEntityTypeConfiguration<AppUs
     {
         builder.ToTable("AppUserIdentities");
         
-        builder.HasKey(identity => identity.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(identity => identity.Email)
+        builder.OwnsOne(x => x.ConfirmationCode, cfg =>
+        {
+            cfg.Property(cfg => cfg.ExpireAt)
+                .HasDefaultValueSql("GETUTCDATE()");
+        });
+
+        builder.Property(x => x.Email)
             .HasMaxLength(255);
         
-        builder.Property(identity => identity.PhoneNumber)
+        builder.Property(x => x.PhoneNumber)
             .HasMaxLength(20);
         
-        builder.Property(identity => identity.PasswordHash)
+        builder.Property(x => x.PasswordHash)
             .HasMaxLength(512);
 
-        builder.Property(identity => identity.PasswordSalt)
+        builder.Property(x => x.PasswordSalt)
             .HasMaxLength(64);
     }
 }

@@ -6,9 +6,12 @@ public class AppUserRoleEntityConfiguration : IEntityTypeConfiguration<AppUserRo
     {
         builder.ToTable("AppUserRoles");
 
-        builder.HasKey(role => role.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(role => role.Name)
-            .HasMaxLength(50);
+        builder.Property(x => x.Id).ValueGeneratedNever();
+
+        builder.Property(x => x.Name)
+            .HasMaxLength(50)
+            .HasConversion<EnumToStringConverter<Role>>();
     }
 }
