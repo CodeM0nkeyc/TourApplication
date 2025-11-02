@@ -1,8 +1,6 @@
-﻿using TourApp.Application.Contracts.Services.Account;
+﻿namespace TourApp.Application.Features.Users.Commands.AuthenticateUser;
 
-namespace TourApp.Application.Features.Users.Commands.AuthenticateUser;
-
-public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, AuthenticationResponse>
+public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, Result<AuthenticationResponse?>>
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -11,7 +9,8 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
         _authenticationService = authenticationService;
     }
     
-    public async Task<AuthenticationResponse> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AuthenticationResponse?>> Handle(
+        AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
         return await _authenticationService.AuthenticateWithPasswordAsync(request.AuthenticationRequest);
     }

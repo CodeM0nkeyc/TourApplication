@@ -1,4 +1,6 @@
-﻿namespace TourApp.Infrastructure.Services.Account;
+﻿using TourApp.Application.Models.Result;
+
+namespace TourApp.Infrastructure.Services.Account;
 
 public class AuthenticationService : IAuthenticationService
 {
@@ -14,35 +16,37 @@ public class AuthenticationService : IAuthenticationService
 
     private bool ComparePasswordBytes(byte[] password1, byte[] password2)
     {
-        return password1.Length != password2.Length 
+        return password1.Length == password2.Length 
                && password1.SequenceEqual(password2);
     }
     
-    public async Task<AuthenticationResponse> AuthenticateWithPasswordAsync(AuthenticationRequest request)
+    public async Task<Result<AuthenticationResponse?>> AuthenticateWithPasswordAsync(AuthenticationRequest request)
     {
-        AppUser? appUser = await _userRepository.GetByEmailAsync(request.Email);
+        User? appUser = await _userRepository.GetByEmailAsync(request.Email);
 
         if (appUser is null)
         {
-            return new AuthenticationResponse(AuthenticationResult.IncorrectEmail);
+            return AuthenticationErrors.IncorrectEmail;
         }
         
-        AppUserIdentity appUserIdentity = appUser.Identity;
+        UserIdentity userIdentity = appUser.Identity;
         
-        if (!appUserIdentity.EmailConfirmed)
+        if (!userIdentity.EmailConfirmed)
         {
-            return new AuthenticationResponse(AuthenticationResult.NotConfirmed);
+            return AuthenticationErrors.NotConfirmed;
         }
         
         byte[] requestPasswordBytes = Encoding.ASCII.GetBytes(request.Password);
         byte[] requestPasswordHash = _passwordHashService
-            .ComputeHash(requestPasswordBytes, appUserIdentity.PasswordSalt);
+            .ComputeHash(requestPasswordBytes, userIdentity.PasswordSalt);
 
-        AuthenticationResult authenticationResult = 
-            ComparePasswordBytes(requestPasswordHash, appUserIdentity.PasswordHash) 
-            ? AuthenticationResult.Success
-            : AuthenticationResult.IncorrectPassword;
-
-        return new AuthenticationResponse(authenticationResult, appUser.Id, appUser.Role.Name);
+        if (!ComparePasswordBytes(requestPasswordHash, userIdentity.PasswordHash))
+        {
+            return AuthenticationErrors.IncorrectPassword;
+        }
+        
+        AuthenticationResponse response = new AuthenticationResponse(appUser.Id, appUser.Role.Name);
+        
+        return Result<AuthenticationResponse>.Success(response);
     }
 }

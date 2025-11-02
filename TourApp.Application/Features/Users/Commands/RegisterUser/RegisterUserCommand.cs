@@ -2,4 +2,4 @@
 
 public record RegisterUserCommand(
     RegistrationRequest RegistrationRequest
-) : IRequest<RegistrationResult>;
+) : IRequest<Result>;

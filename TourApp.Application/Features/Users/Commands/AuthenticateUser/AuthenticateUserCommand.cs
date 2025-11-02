@@ -2,4 +2,4 @@
 
 public record AuthenticateUserCommand(
     AuthenticationRequest AuthenticationRequest
-) : IRequest<AuthenticationResponse>;
+) : IRequest<Result<AuthenticationResponse?>>;

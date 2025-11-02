@@ -1,4 +1,7 @@
-﻿namespace TourApp.Infrastructure.Services.Account;
+﻿using TourApp.Application.Models.Result;
+using TourApp.Application.Services;
+
+namespace TourApp.Infrastructure.Services.Account;
 
 public class RegistrationService : IRegistrationService
 {
@@ -6,23 +9,26 @@ public class RegistrationService : IRegistrationService
     
     private readonly SenderSettings _senderSettings;
     
-    private readonly IUserService _userService;
     private readonly IUserRepository _userRepository;
-    
+    private readonly IUserIdentityRepository _userIdentityRepository;
+
     private readonly IEmailService _emailService;
     private readonly IPasswordHashService _passwordHashService;
     private readonly IConfirmationGenerator _confirmationGenerator;
+    private readonly CountryService _countryService;
 
     public RegistrationService(
-        IUserService userService, IUserRepository userRepository, 
-        IEmailService emailService, IPasswordHashService passwordHashService,
-        IConfirmationGenerator confirmationGenerator, IOptions<SenderSettings> senderSettings)
+        IUserRepository userRepository, IUserIdentityRepository userIdentityRepository, 
+        IEmailService emailService, IPasswordHashService passwordHashService, 
+        IConfirmationGenerator confirmationGenerator, IOptions<SenderSettings> senderSettings,
+        CountryService countryService)
     {
-        _userService = userService;
         _userRepository = userRepository;
+        _userIdentityRepository = userIdentityRepository;
         _emailService = emailService;
         _passwordHashService = passwordHashService;
         _confirmationGenerator = confirmationGenerator;
+        _countryService = countryService;
         _senderSettings = senderSettings.Value;
     }
 
@@ -31,16 +37,16 @@ public class RegistrationService : IRegistrationService
         return $"Your confirmation code is {confirmationCode}";
     }
     
-    public async Task<RegistrationResult> RegisterAsync(RegistrationRequest request)
+    public async Task<Result> RegisterAsync(RegistrationRequest request)
     {
-        bool isUnique = await _userService.CheckUniquenessAsync(request.Email, request.PhoneNumber);
+        bool userExists = await _userIdentityRepository.ExistsAsync(request.Email);
         
-        if (!isUnique)
+        if (userExists)
         {
-            return RegistrationResult.AlreadyRegistered;
+            return RegistrationErrors.AlreadyRegistered;
         }
 
-        string recepientName = $"{request.LastName} {request.FirstName}";
+        string recipientName = $"{request.LastName} {request.FirstName}";
         int confirmationCode = _confirmationGenerator.GenerateCode();
         string emailBody = GetConfirmationEmailBody(confirmationCode);
         
@@ -50,7 +56,7 @@ public class RegistrationService : IRegistrationService
             FromName = _senderSettings.FromName,
             Subject = _subject,
             ToAddress = request.Email,
-            ToName = recepientName,
+            ToName = recipientName,
             Body = emailBody
         };
 
@@ -60,52 +66,50 @@ public class RegistrationService : IRegistrationService
         }
         catch
         {
-            return RegistrationResult.ConfirmationEmailError;
+            return RegistrationErrors.EmailConfirmationNotSent;
         }
 
-        AppUser newUser = request.CreateAppUser(confirmationCode, _passwordHashService);
+        User newUser = request.CreateAppUser(confirmationCode, _passwordHashService, _countryService);
         
         await _userRepository.AddAsync(newUser);
         await _userRepository.SaveAsync();
         
-        return RegistrationResult.ConfirmationSent;
+        return Result.Success();
     }
 
-    public async Task<ConfirmationResult> ConfirmRegistrationAsync(string email, int confirmationCode)
+    public async Task<Result> ConfirmRegistrationAsync(string email, int confirmationCode)
     {
-        AppUserIdentity identity = await _userRepository.GetUserIdentityByEmailAsync(email) 
-                                   ?? throw new NoConfirmationEmailException(email);
+        UserIdentity? identity = await _userIdentityRepository.GetByEmailAsync(email);
+
+        if (identity is null)
+        {
+            return CodeConfirmationErrors.NoEmail;
+        }
         
         ConfirmationCode? storedCode = identity.ConfirmationCode;
 
         if (storedCode is null)
         {
             return identity.EmailConfirmed 
-                ? ConfirmationResult.AlreadyConfirmed 
+                ? CodeConfirmationErrors.AlreadyConfirmed
                 : throw new InvalidOperationException("No confirmation code");
         }
 
         if (storedCode.ExpireAt.CompareTo(DateTime.UtcNow) < 0)
         {
-            return ConfirmationResult.Expired;
+            return CodeConfirmationErrors.Expired;
         }
 
         if (storedCode.Code != confirmationCode)
         {
-            return ConfirmationResult.NoMatch;
+            return CodeConfirmationErrors.NoMatch;
         }
-
-        AppUser confirmedUser = new AppUser()
-        {
-            Id = identity.Id,
-            Identity = identity
-        };
-
-        identity.EmailConfirmed = true;
-        identity.ConfirmationCode = null;
         
-        _userRepository.Update(confirmedUser);
+        identity.EmailConfirmed = true;
+        _userIdentityRepository.SetConfirmationCode(identity, null);
+        _userIdentityRepository.Update(identity, nameof(UserIdentity.EmailConfirmed));
+        await _userIdentityRepository.SaveAsync();
 
-        return ConfirmationResult.Success;
+        return Result.Success();
     }
 }

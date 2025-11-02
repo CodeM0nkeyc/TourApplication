@@ -1,20 +1,29 @@
-﻿namespace TourApp.Infrastructure.Extensions;
+﻿using TourApp.Application.Services;
+
+namespace TourApp.Infrastructure.Extensions;
 
 public static class RegistrationRequestExtensions
 {
-    public static AppUser CreateAppUser(
-        this RegistrationRequest request, int confirmationCode, IPasswordHashService passwordHashService)
+    public static User CreateAppUser(
+        this RegistrationRequest request, int confirmationCode, 
+        IPasswordHashService passwordHashService, CountryService countryService)
     {
         byte[] passwordBytes = Encoding.ASCII.GetBytes(request.Password);
         byte[] salt = passwordHashService.GenerateSalt();
 
         byte[] passwordHash = passwordHashService.ComputeHash(passwordBytes, salt);
 
-        AppUserRole role = new AppUserRole() { Id = (int)Role.Customer };
+        string? dialCode = null;
 
-        AppUserIdentity identity = new AppUserIdentity()
+        if (request.PhoneNumber is not null)
+        {
+            dialCode = countryService.GetCountryDialCode(request.Address.Country);
+        }
+
+        UserIdentity identity = new UserIdentity()
         {
             Email = request.Email,
+            DialCode = dialCode,
             PhoneNumber = request.PhoneNumber,
             PasswordHash = passwordHash,
             PasswordSalt = salt,
@@ -25,13 +34,13 @@ public static class RegistrationRequestExtensions
             }
         };
         
-        AppUser user = new AppUser()
+        User user = new User()
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
             MiddleName = request.MiddleName,
             Address = request.Address,
-            Role = role,
+            RoleId = (int)Role.Customer,
             Identity = identity
         };
 
