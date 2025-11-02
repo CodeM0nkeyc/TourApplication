@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Features.Users.Dto;
 
-public record AppUserDto
+public record UserDto
 {
     public string FirstName { get; set; }
     public string MiddleName { get; set; }

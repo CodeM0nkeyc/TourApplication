@@ -1,8 +1,8 @@
 ﻿namespace TourApp.Persistence.EntityConfigs;
 
-public class AppUserEntityConfiguration : IEntityTypeConfiguration<AppUser>
+public class UserEntityConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<AppUser> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
         
@@ -10,14 +10,16 @@ public class AppUserEntityConfiguration : IEntityTypeConfiguration<AppUser>
 
         builder.HasOne(x => x.Identity)
             .WithOne(x => x.User)
-            .HasForeignKey<AppUserIdentity>(x => x.Id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<UserIdentity>(x => x.Id)
+            .HasPrincipalKey<User>(x => x.Id)
+            .IsRequired();
 
         builder.HasOne(x => x.Role)
             .WithMany(x => x.Users)
-            .HasForeignKey("RoleId")
-            .HasPrincipalKey(x => x.Id);
+            .HasForeignKey(x => x.RoleId)
+            .HasPrincipalKey(x => x.Id)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
         
         builder.HasMany(x => x.TourBookings)
             .WithOne(x => x.User)

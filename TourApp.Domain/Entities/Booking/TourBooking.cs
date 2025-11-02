@@ -15,7 +15,7 @@ public class TourBooking : EntityBase<int>
     
     public Tour.Tour Tour { get; set; }
     
-    public AppUser User { get; set; }
+    public User.User User { get; set; }
     
     public ICollection<TourCustomer> TourCustomers { get; set; }
 }

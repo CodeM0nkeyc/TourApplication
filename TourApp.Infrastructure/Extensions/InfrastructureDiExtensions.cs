@@ -11,27 +11,29 @@ public static class InfrastructureDiExtensions
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IRegistrationService, RegistrationService>();
-        
-        services.AddScoped<IUserService, UserService>();
 
         services.Configure<SmtpSettings>(opts =>
         {
-            opts.Host = emailConfiguration["Host"] 
-                ?? throw new InvalidOperationException("Missing host");
-            opts.Port = int.Parse(emailConfiguration["Port"] 
-                ?? throw new InvalidOperationException("Missing port"));
+            IConfigurationSection smtpSection = emailConfiguration.GetSection("SmtpSettings");
             
-            opts.Username = emailConfiguration["Username"] 
-                ?? throw new InvalidOperationException("Missing username");
-            opts.Password = emailConfiguration["Password"] 
-                ?? throw new InvalidOperationException("Missing password");
+            opts.Host = smtpSection["Host"] 
+                        ?? throw new InvalidOperationException("Missing host");
+            opts.Port = int.Parse(smtpSection["Port"] 
+                                  ?? throw new InvalidOperationException("Missing port"));
+            
+            opts.Username = smtpSection["Username"] 
+                            ?? throw new InvalidOperationException("Missing username");
+            opts.Password = smtpSection["Password"] 
+                            ?? throw new InvalidOperationException("Missing password");
         });
 
         services.Configure<SenderSettings>(opts =>
         {
-            opts.FromAddress = emailConfiguration["FromAddress"]
+            IConfigurationSection senderSection = emailConfiguration.GetSection("SenderSettings");
+            
+            opts.FromAddress = senderSection["FromAddress"]
                                ?? throw new InvalidOperationException("Missing sender address");
-            opts.FromName = emailConfiguration["FromName"]
+            opts.FromName = senderSection["FromName"]
                             ?? throw new InvalidOperationException("Missing sender name");
         });
         

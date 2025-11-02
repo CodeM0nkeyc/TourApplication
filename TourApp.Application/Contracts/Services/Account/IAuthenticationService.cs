@@ -2,5 +2,5 @@
 
 public interface IAuthenticationService
 {
-    public Task<AuthenticationResponse> AuthenticateWithPasswordAsync(AuthenticationRequest request);
+    public Task<Result<AuthenticationResponse?>> AuthenticateWithPasswordAsync(AuthenticationRequest request);
 }

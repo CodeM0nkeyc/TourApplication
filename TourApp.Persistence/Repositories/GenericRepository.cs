@@ -7,6 +7,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public GenericRepository(ApplicationDbContext dbContext)
     {
         this.dbContext = dbContext;
+        dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
     public virtual async Task<TEntity?> GetAsync(Specification<TEntity>? specification)
@@ -41,30 +42,24 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public virtual void Update(TEntity entity)
     {
-        if (dbContext.Entry(entity).State != EntityState.Detached)
+        if (dbContext.Entry(entity).State == EntityState.Detached)
         {
-            return;
+            dbContext.Update(entity);
         }
-        
-        dbContext.Update(entity);
     }
 
     public virtual void Update(TEntity entity, params string[] props)
     {
-        if (dbContext.Entry(entity).State != EntityState.Detached)
+        if (dbContext.Entry(entity).State == EntityState.Detached)
         {
-            return;
+            dbContext.Attach(entity);
         }
-        
-        dbContext.Attach(entity);
         
         foreach (var prop in props)
         {
             dbContext.Entry(entity)
                 .Property(prop).IsModified = true;
         }
-
-        dbContext.Update(entity);
     }
 
     public virtual void Delete(TEntity entity)

@@ -2,16 +2,16 @@
 
 namespace TourApp.Application.Features.Users.Specifications;
 
-public class UserSpecificationFactory : SpecificationFactory<AppUser, UserQuerySettings>
+public class UserSpecificationFactory : SpecificationFactory<User, UserQuerySettings>
 {
-    public override Specification<AppUser>? CreateSpecification(UserQuerySettings? settings)
+    public override Specification<User>? CreateSpecification(UserQuerySettings? settings)
     {
         if (settings is null)
         {
             return null;
         }
 
-        Specification<AppUser> spec = new Specification<AppUser>();
+        Specification<User> spec = new Specification<User>();
 
         if (settings.Id.HasValue)
         {

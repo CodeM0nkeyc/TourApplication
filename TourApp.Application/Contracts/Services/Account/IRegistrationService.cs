@@ -2,6 +2,6 @@
 
 public interface IRegistrationService
 {
-    public Task<RegistrationResult> RegisterAsync(RegistrationRequest request);
-    public Task<ConfirmationResult> ConfirmRegistrationAsync(string email, int confirmationCode);
+    public Task<Result> RegisterAsync(RegistrationRequest request);
+    public Task<Result> ConfirmRegistrationAsync(string email, int confirmationCode);
 }

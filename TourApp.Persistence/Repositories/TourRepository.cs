@@ -4,6 +4,7 @@ public class TourRepository : GenericRepository<Tour>, ITourRepository
 {
     public TourRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
+        
     }
 
     public async Task<IList<string>> GetTourCountriesAsync()

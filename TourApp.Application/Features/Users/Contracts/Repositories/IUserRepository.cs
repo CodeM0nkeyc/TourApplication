@@ -1,10 +1,9 @@
-﻿namespace TourApp.Application.Features.Users.Contracts.Repositories;
+﻿using TourApp.Application.Contracts.Repositories;
 
-public interface IUserRepository : IGenericRepository<AppUser>
+namespace TourApp.Application.Features.Users.Contracts.Repositories;
+
+public interface IUserRepository : IGenericRepository<User>
 {
-    public Task<AppUser?> GetByEmailAsync(string email);
-    public Task<AppUser?> GetByPhoneNumberAsync(string phoneNumber);
-    
-    public Task<AppUserIdentity?> GetUserIdentityByIdAsync(int id);
-    public Task<AppUserIdentity?> GetUserIdentityByEmailAsync(string email);
+    public Task<User?> GetByEmailAsync(string email);
+    public Task<User?> GetByPhoneNumberAsync(string phoneNumber);
 }

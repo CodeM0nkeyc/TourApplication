@@ -175,7 +175,40 @@ namespace TourApp.Persistence.Migrations
                     b.ToTable("TourPricingDetails", (string)null);
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUser", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.TourCustomer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TourCustomers", (string)null);
+
+                    b.HasCheckConstraint("CK_TourCustomer_Age", "[Age] > 0");
+                });
+
+            modelBuilder.Entity("TourApp.Domain.Entities.User.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,10 +243,14 @@ namespace TourApp.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUserIdentity", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.UserIdentity", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("DialCode")
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -239,10 +276,10 @@ namespace TourApp.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUserIdentities", (string)null);
+                    b.ToTable("UserIdentities", (string)null);
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUserRole", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -254,40 +291,19 @@ namespace TourApp.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUserRoles", (string)null);
-                });
+                    b.ToTable("UserRoles", (string)null);
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.TourCustomer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TourCustomers", (string)null);
-
-                    b.HasCheckConstraint("CK_TourCustomer_Age", "[Age] > 0");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Customer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("TourBookingTourCustomer", b =>
@@ -313,7 +329,7 @@ namespace TourApp.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TourApp.Domain.Entities.User.AppUser", "User")
+                    b.HasOne("TourApp.Domain.Entities.User.User", "User")
                         .WithMany("TourBookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -333,17 +349,17 @@ namespace TourApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUser", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.User", b =>
                 {
-                    b.HasOne("TourApp.Domain.Entities.User.AppUserRole", "Role")
+                    b.HasOne("TourApp.Domain.Entities.User.UserRole", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("TourApp.Domain.Entities.User.Common.Address", "Address", b1 =>
                         {
-                            b1.Property<int>("AppUserId")
+                            b1.Property<int>("UserId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
@@ -359,12 +375,12 @@ namespace TourApp.Persistence.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.HasKey("AppUserId");
+                            b1.HasKey("UserId");
 
                             b1.ToTable("Users");
 
                             b1.WithOwner()
-                                .HasForeignKey("AppUserId");
+                                .HasForeignKey("UserId");
                         });
 
                     b.Navigation("Address")
@@ -373,17 +389,17 @@ namespace TourApp.Persistence.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUserIdentity", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.UserIdentity", b =>
                 {
-                    b.HasOne("TourApp.Domain.Entities.User.AppUser", "User")
+                    b.HasOne("TourApp.Domain.Entities.User.User", "User")
                         .WithOne("Identity")
-                        .HasForeignKey("TourApp.Domain.Entities.User.AppUserIdentity", "Id")
+                        .HasForeignKey("TourApp.Domain.Entities.User.UserIdentity", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("TourApp.Domain.Entities.User.Common.ConfirmationCode", "ConfirmationCode", b1 =>
                         {
-                            b1.Property<int>("AppUserIdentityId")
+                            b1.Property<int>("UserIdentityId")
                                 .HasColumnType("int");
 
                             b1.Property<int>("Code")
@@ -394,12 +410,12 @@ namespace TourApp.Persistence.Migrations
                                 .HasColumnType("datetime2")
                                 .HasDefaultValueSql("GETUTCDATE()");
 
-                            b1.HasKey("AppUserIdentityId");
+                            b1.HasKey("UserIdentityId");
 
-                            b1.ToTable("AppUserIdentities");
+                            b1.ToTable("UserIdentities");
 
                             b1.WithOwner()
-                                .HasForeignKey("AppUserIdentityId");
+                                .HasForeignKey("UserIdentityId");
                         });
 
                     b.Navigation("ConfirmationCode");
@@ -428,7 +444,7 @@ namespace TourApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUser", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.User", b =>
                 {
                     b.Navigation("Identity")
                         .IsRequired();
@@ -436,7 +452,7 @@ namespace TourApp.Persistence.Migrations
                     b.Navigation("TourBookings");
                 });
 
-            modelBuilder.Entity("TourApp.Domain.Entities.User.AppUserRole", b =>
+            modelBuilder.Entity("TourApp.Domain.Entities.User.UserRole", b =>
                 {
                     b.Navigation("Users");
                 });

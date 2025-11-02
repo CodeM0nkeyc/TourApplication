@@ -14,6 +14,6 @@ public class Pbkdf2PasswordHashService : IPasswordHashService
 
     public byte[] GenerateSalt()
     {
-        return RandomNumberGenerator.GetBytes(_hashLength * 8);
+        return RandomNumberGenerator.GetBytes(_hashLength);
     }
 }

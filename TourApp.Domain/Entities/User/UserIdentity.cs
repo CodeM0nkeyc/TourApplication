@@ -1,8 +1,10 @@
 ﻿namespace TourApp.Domain.Entities.User;
 
-public class AppUserIdentity : EntityBase<int>
+public class UserIdentity : EntityBase<int>
 {
     public string Email { get; set; }
+    
+    public string? DialCode { get; set; }
     public string? PhoneNumber { get; set; }
 
     public byte[] PasswordHash { get; set; }
@@ -12,5 +14,5 @@ public class AppUserIdentity : EntityBase<int>
     
     public ConfirmationCode? ConfirmationCode { get; set; }
     
-    public AppUser User { get; set; }
+    public User User { get; set; }
 }

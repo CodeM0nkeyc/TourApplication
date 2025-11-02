@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Features.Users.Specifications;
 
-public class UserPhoneNumberSpecification : Specification<AppUser>
+public class UserPhoneNumberSpecification : Specification<User>
 {
     public UserPhoneNumberSpecification(string phoneNumber)
     {

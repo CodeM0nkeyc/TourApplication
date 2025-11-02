@@ -10,7 +10,6 @@
       <Folder Include="Features\TourBookings\Commands\" />
       <Folder Include="Features\TourBookings\Queries\" />
       <Folder Include="Features\Tours\Commands\" />
-      <Folder Include="Features\Users\Validators\" />
     </ItemGroup>
 
     <ItemGroup>

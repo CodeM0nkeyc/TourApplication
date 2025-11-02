@@ -1,8 +1,8 @@
 ﻿namespace TourApp.Application.Features.Users.Queries.GetUser;
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, AppUserDto?>
+public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto?>
 {
-    public Task<AppUserDto?> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public Task<UserDto?> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

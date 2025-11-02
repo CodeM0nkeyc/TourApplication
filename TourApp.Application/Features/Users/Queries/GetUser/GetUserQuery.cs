@@ -3,4 +3,4 @@
 public record GetUserQuery(
     string Email,
     Guid? Id
-) : IRequest<AppUserDto?>;
+) : IRequest<UserDto?>;

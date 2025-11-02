@@ -1,10 +1,10 @@
 ﻿namespace TourApp.Persistence.EntityConfigs;
 
-public class AppUserRoleEntityConfiguration : IEntityTypeConfiguration<AppUserRole>
+public class UserRoleEntityConfiguration : IEntityTypeConfiguration<UserRole>
 {
-    public void Configure(EntityTypeBuilder<AppUserRole> builder)
+    public void Configure(EntityTypeBuilder<UserRole> builder)
     {
-        builder.ToTable("AppUserRoles");
+        builder.ToTable("UserRoles");
 
         builder.HasKey(x => x.Id);
 

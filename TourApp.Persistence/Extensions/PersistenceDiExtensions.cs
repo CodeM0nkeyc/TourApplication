@@ -15,6 +15,7 @@ public static class PersistenceDiExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserIdentityRepository, UserIdentityRepository>();
         
         return services;
     }

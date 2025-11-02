@@ -1,6 +1,4 @@
-﻿using TourApp.Domain.Entities.Booking;
-
-namespace TourApp.Domain.Entities.User;
+﻿namespace TourApp.Domain.Entities.User;
 
 public class TourCustomer : EntityBase<int>
 {

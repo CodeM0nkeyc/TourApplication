@@ -1,8 +1,6 @@
-﻿using TourApp.Domain.Entities.Booking;
+﻿namespace TourApp.Domain.Entities.User;
 
-namespace TourApp.Domain.Entities.User;
-
-public class AppUser : EntityBase<int>
+public class User : EntityBase<int>
 {
     public string FirstName { get; set; }
     public string? MiddleName { get; set; }
@@ -10,9 +8,10 @@ public class AppUser : EntityBase<int>
     
     public Address Address { get; set; }
     
-    public AppUserIdentity Identity { get; set; }
+    public UserIdentity Identity { get; set; }
     
-    public AppUserRole Role { get; set; }
+    public int RoleId { get; set; }
+    public UserRole Role { get; set; }
     
     public byte[]? Image { get; set; }
     

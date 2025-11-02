@@ -2,15 +2,15 @@
 
 public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
-    public DbSet<Tour> Tours { get; set; }
+    public DbSet<Domain.Entities.Tour.Tour> Tours { get; set; }
     public DbSet<TourPricingDetails> TourPricingDetails { get; set; }
     
     public DbSet<TourBooking> TourBooking { get; set; }
     public DbSet<TourCustomer> TourCustomers { get; set; }
     
-    public DbSet<AppUser> AppUsers { get; set; }
-    public DbSet<AppUserIdentity> AppUserIdentities { get; set; }
-    public DbSet<AppUserRole> AppUserRoles { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserIdentity> UserIdentities { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

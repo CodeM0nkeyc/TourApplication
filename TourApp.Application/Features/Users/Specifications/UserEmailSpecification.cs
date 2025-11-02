@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Features.Users.Specifications;
 
-public class UserEmailSpecification : Specification<AppUser>
+public class UserEmailSpecification : Specification<User>
 {
     public UserEmailSpecification(string email)
     {
