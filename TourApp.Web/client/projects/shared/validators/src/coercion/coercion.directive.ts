@@ -1,7 +1,7 @@
 import {AfterViewInit, Directive, ElementRef, inject, input, OnInit} from '@angular/core';
 import {BindThis} from "shared/utilities";
-import {validationRegexes} from "../common/validation-regexes";
-import type {ValidationType} from "../common/types";
+import {VALIDATION_REGEXES} from "../common/validation-regexes";
+import type {ValidationType} from "../common/validation-type";
 
 @Directive({
     selector: 'app-data-input[fieldCoercion], app-list-input[fieldCoercion]',
@@ -47,12 +47,12 @@ export class CoercionDirective implements OnInit, AfterViewInit {
                 }
 
                 const valueOverflow = (event.target as HTMLInputElement).value.length > 12;
-                return !valueOverflow && validationRegexes[validationType].test(event.data);
+                return !valueOverflow && VALIDATION_REGEXES[validationType].test(event.data);
             }
         }
         else {
             this._validateChange = (event: InputEvent): boolean => {
-                return event.data === null || validationRegexes[validationType].test(event.data);
+                return event.data === null || VALIDATION_REGEXES[validationType].test(event.data);
             }
         }
     }

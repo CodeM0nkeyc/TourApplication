@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Signal, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, Signal, signal} from '@angular/core';
 import {TourCardComponent} from "./tour-card/tour-card.component";
 import {TourCardFrontComponent} from "./tour-card/tour-card-front/tour-card-front.component";
 import {TourCardBackComponent} from "./tour-card/tour-card-back/tour-card-back.component";
@@ -20,14 +20,17 @@ import type {TourCardVM} from "shared/models";
     providers: [provideToursService()],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SectionToursComponent {
+export class SectionToursComponent implements OnInit {
     private readonly _toursService = inject(ToursService);
 
     public readonly tours: Signal<TourCardVM[]> = signal<TourCardVM[]>([])
 
     public constructor() {
-        this._toursService.loadToursAsync();
         this.tours = this._toursService.tours;
+    }
+
+    public async ngOnInit(): Promise<void> {
+        await this._toursService.loadToursAsync();
     }
 
     protected readonly Math = Math;

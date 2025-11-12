@@ -1,0 +1,41 @@
+@use "abstracts/variables" as *;
+@use "containers/grid" as *
+with ($grid-width: 100%);
+
+:host {
+  display: block;
+}
+
+main {
+  min-height: 100vh;
+  padding: 15rem 5rem;
+  background-image: linear-gradient(
+      to right bottom, rgba($color-primary-light, 0.7), rgba($color-primary-dark, 0.7)),
+      url("/auth/img/background-3.webp");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.auth {
+  &-container {
+    @extend .grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-evenly;
+    align-items: baseline;
+    animation: fadeIn 1s ease-in;
+
+    & auth-welcome-section {
+      margin-top: 5rem;
+    }
+  }
+
+  &-form {
+    position: relative;
+    padding: 3rem;
+    width: 40rem;
+    max-height: 100%;
+    background-color: $color-white;
+    border-radius: 1rem;
+  }
+}

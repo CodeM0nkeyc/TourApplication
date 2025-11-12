@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, Signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {ButtonComponent, DataInputComponent, ListInputComponent} from "shared/components";
 import {AppCrossValidators, CoercionDirective} from "shared/validators";
@@ -19,7 +19,7 @@ import type {TourDifficulty} from "shared/models";
     styleUrl: './filter-panel.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FilterPanelComponent {
+export class FilterPanelComponent implements OnInit {
     private readonly _toursService = inject(ToursService);
     private readonly _formBuilder = inject(FormBuilder);
 
@@ -28,8 +28,8 @@ export class FilterPanelComponent {
     public readonly form = this._formBuilder.group({
         priceFrom: this._formBuilder.nonNullable.control<string | undefined>(undefined),
         priceTo: this._formBuilder.nonNullable.control<string | undefined>(undefined),
-        countries: this._formBuilder.nonNullable.control<Map<string, any>>(new Map<string, any>()),
-        difficulties: this._formBuilder.nonNullable.control<Map<string, any>>(new Map<string, any>()),
+        countries: this._formBuilder.nonNullable.control<Map<string, {}>>(new Map<string, {}>()),
+        difficulties: this._formBuilder.nonNullable.control<Map<string, number>>(new Map<string, number>()),
         remainingPlaces: this._formBuilder.nonNullable.control<string | undefined>(undefined),
         startDate: this._formBuilder.nonNullable.control<string | undefined>(undefined),
     }, {
@@ -38,7 +38,7 @@ export class FilterPanelComponent {
         ]
     });
 
-    public readonly countries: Signal<Map<string, any>>;
+    public readonly countries: Signal<Map<string, {}>>;
 
     public readonly difficulties = new Map<TourDifficulty, number>([
         [ 'Easy', 1 ],
@@ -47,13 +47,16 @@ export class FilterPanelComponent {
     ]);
 
     public constructor() {
-        this._toursService.loadTourCountries();
         this.countries = computed(() => {
             const countryMapData = this._toursService.tourCountries()
-                .map(country => [country, null] as [string, null])
-                .sort((a, b) => a[0].localeCompare(b[0])) as [string, null][];
+                .map(country => [country, {}] as [string, {}])
+                .sort((a, b) => a[0].localeCompare(b[0])) as [string, {}][];
             return new Map(countryMapData);
         });
+    }
+
+    public ngOnInit(): void {
+        this._toursService.loadTourCountries();
     }
 
     public async onSubmit(event: Event): Promise<void> {

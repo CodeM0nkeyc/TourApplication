@@ -1,0 +1,30 @@
+<h1 class="sign-up__heading u-margin-b-small">Personal information</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="sign-up__form">
+  <div>
+    <app-data-input fieldCoercion="lettersWithSpaces" formControlName="firstName"
+                    name="firstName" placeholder="Johny"
+                    type="text" class="shadow-outline">
+      First name*
+    </app-data-input>
+    <app-validation-message [control]="form.controls.firstName" class="validation-message" />
+  </div>
+
+  <div>
+    <app-data-input fieldCoercion="lettersWithSpaces" formControlName="lastName"
+                    name="lastName" placeholder="Smith"
+                    type="text" class="shadow-outline">
+      Last name*
+    </app-data-input>
+    <app-validation-message [control]="form.controls.lastName" class="validation-message" />
+  </div>
+
+  <app-data-input fieldCoercion="lettersWithSpaces" formControlName="middleName"
+                  name="middleName" placeholder="Sky"
+                  type="text" class="shadow-outline u-margin-b-small">
+    Middle name
+  </app-data-input>
+
+  <div class="sign-up__buttons">
+    <button app-button class="basic green" type="submit">Next &rarr;</button>
+  </div>
+</form>

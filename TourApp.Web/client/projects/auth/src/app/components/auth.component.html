@@ -1,0 +1,14 @@
+<main>
+  <div class="auth-container">
+    <auth-welcome-section />
+    <div class="auth-form">
+      @if (isWaitingResponse()) {
+        <div class="loading-container">
+          <app-spinner>Wait a sec...</app-spinner>
+        </div>
+      }
+
+      <router-outlet />
+    </div>
+  </div>
+</main>

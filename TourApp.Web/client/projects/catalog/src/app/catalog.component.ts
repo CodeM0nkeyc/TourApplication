@@ -1,4 +1,4 @@
-import {Component, inject, Signal} from '@angular/core';
+import {Component, inject, OnInit, Signal} from '@angular/core';
 import {TourCardComponent} from "./tour-card/tour-card.component";
 import {FilterPanelComponent} from "./filter-panel/filter-panel.component";
 import {provideToursService, ToursService} from "shared/services";
@@ -27,7 +27,7 @@ import {
     styleUrl: './catalog.component.scss',
     providers: [provideToursService(6)]
 })
-export class CatalogComponent {
+export class CatalogComponent implements OnInit {
     private readonly _toursService = inject(ToursService);
 
     public readonly tours: Signal<Array<TourCardVM>>;
@@ -35,10 +35,13 @@ export class CatalogComponent {
     public readonly isLastToursLoaded: Signal<boolean>;
 
     public constructor() {
-        this._toursService.loadToursAsync();
         this.tours = this._toursService.tours;
         this.isLoading = this._toursService.isLoading;
         this.isLastToursLoaded = this._toursService.isLastDataLoaded;
+    }
+
+    public async ngOnInit(): Promise<void> {
+        await this._toursService.loadToursAsync();
     }
 
     public async onLoadMore(event: Event): Promise<void> {

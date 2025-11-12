@@ -33,7 +33,7 @@ import type {ListInputValue} from "./list-input.model";
 export class ListInputComponent extends BaseDataInput
     implements ControlValueAccessor {
 
-    private readonly _searchTree = new TrieSearch<KeyValue<string, any>>(
+    private readonly _searchTree = new TrieSearch<KeyValue<string, {}>>(
         "key", { ignoreCase: true }
     );
 
@@ -42,12 +42,12 @@ export class ListInputComponent extends BaseDataInput
     private readonly _dataListRef =
         viewChild.required<ElementRef<HTMLUListElement>>("dataList");
 
-    private change: (value: Map<string, any> | ListInputValue) => void = () => {};
+    private change: (value: Map<string, {}> | ListInputValue) => void = () => {};
     private touch: () => void = () => {};
 
-    public readonly initOptions = input.required<Map<string, any>>();
-    public readonly currentOptions = signal<Map<string, any>>(new Map());
-    public readonly selectedValues = signal<Map<string, any>>(new Map());
+    public readonly initOptions = input.required<Map<string, {}>>();
+    public readonly currentOptions = signal<Map<string, {}>>(new Map());
+    public readonly selectedValues = signal<Map<string, {}>>(new Map());
 
     public readonly multipleSelection = input<boolean>(false);
     public readonly textForEmptySearchResult = input<string>("");
@@ -59,13 +59,13 @@ export class ListInputComponent extends BaseDataInput
             this.resetCurrentOptions();
 
             const optionsArr = Array.from(this.initOptions().entries());
-            const searchTreeFeed = optionsArr.map<KeyValue<string, any>>(
+            const searchTreeFeed = optionsArr.map<KeyValue<string, {}>>(
                     entry => {
                         return { key: entry[0], value: entry[1] }
                     }
                 );
 
-            this.selectedValues.update(oldMap => new Map<string, any>(
+            this.selectedValues.update(oldMap => new Map<string, {}>(
                 optionsArr.filter(option => oldMap.has(option[0]))));
 
             this._searchTree.reset();
@@ -73,7 +73,7 @@ export class ListInputComponent extends BaseDataInput
         }, { allowSignalWrites: true });
     }
 
-    private async searchUpdate(value: string) {
+    private searchUpdate(value: string): void {
         if (value === "") {
             this.resetCurrentOptions();
         }
@@ -107,9 +107,14 @@ export class ListInputComponent extends BaseDataInput
         this.currentOptions.set(this.initOptions());
     }
 
-    public writeValue(value: Map<string, any> | ListInputValue): void {
-        const selectedValue = value instanceof Map ? value : new Map<string, any>([value])
+    public writeValue(value: Map<string, {}> | ListInputValue): void {
+        const isMap = value instanceof Map;
+        const selectedValue = isMap ? value : new Map<string, {}>([value])
         this.selectedValues.set(selectedValue);
+
+        if (!this.multipleSelection()) {
+            this._dataInputRef().nativeElement.value = isMap ? Object.values(value)[0] : value[0];
+        }
     }
 
     public registerOnChange(fn: any): void {
@@ -164,7 +169,7 @@ export class ListInputComponent extends BaseDataInput
         let isRemoved = false;
 
         if (!this.selectedValues().has(key)) {
-            this.updateSelectedValues([[key, value]], this.multipleSelection());
+            this.updateSelectedValues([[key, value!]], this.multipleSelection());
         }
         else {
             this.unselectItem(key);

@@ -17,8 +17,9 @@ export class ValidationMessageComponent implements OnInit {
     public readonly validationMessages = signal<string[]>([]);
 
     public ngOnInit(): void {
-        const subscription = this.control().valueChanges.subscribe(value => {
-            this.validationMessages.set(Object.values(this.control().errors ?? {}));
+        const subscription = this.control().statusChanges.subscribe(status => {
+            this.validationMessages.set(Object.values(this.control().errors ?? {})
+                .filter(error => error));
         });
 
         this._destroyRef.onDestroy(() => {

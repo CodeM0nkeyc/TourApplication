@@ -1,1 +1,1 @@
-export type ListInputValue = [string, any];
+export type ListInputValue = [string, {}];

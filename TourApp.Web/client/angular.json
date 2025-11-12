@@ -43,6 +43,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/home",
+            "baseHref": "/home/",
             "index": "projects/home/src/index.html",
             "browser": "projects/home/src/main.ts",
             "polyfills": [
@@ -226,6 +227,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/catalog",
+            "baseHref": "/catalog/",
             "index": "projects/catalog/src/index.html",
             "browser": "projects/catalog/src/main.ts",
             "polyfills": [
@@ -359,6 +361,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/auth",
+            "baseHref": "/auth/",
             "index": "projects/auth/src/index.html",
             "browser": "projects/auth/src/main.ts",
             "polyfills": [

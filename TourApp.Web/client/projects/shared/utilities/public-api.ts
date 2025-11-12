@@ -1,2 +1,3 @@
-export * from "./src/functions/object-hash";
+export * from "./src/nameof";
 export * from "./src/decorators/bind-this";
+export * from "./src/decorators/notify";

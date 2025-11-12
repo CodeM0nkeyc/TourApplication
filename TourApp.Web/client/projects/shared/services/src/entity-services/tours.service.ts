@@ -1,6 +1,6 @@
 import {Provider, Signal, signal} from '@angular/core';
 import type {TourCardVM, TourQuerySettings} from "shared/models";
-import {ToursHttpService} from "../http/tours-http.service";
+import {ToursHttpService} from "../http/tour/tours-http.service";
 import {lastValueFrom} from "rxjs";
 
 export function provideToursService(pageSize: number = 24): Provider {

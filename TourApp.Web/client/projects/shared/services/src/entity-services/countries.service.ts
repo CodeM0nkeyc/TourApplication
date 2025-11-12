@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {CountriesHttpService} from "../http/countries-http.service";
+import {CountriesHttpService} from "../http/country/countries-http.service";
 import {lastValueFrom} from "rxjs";
 
 @Injectable({
