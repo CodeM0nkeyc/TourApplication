@@ -1,7 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, Signal, signal} from '@angular/core';
 import {TourCardComponent} from "./tour-card/tour-card.component";
-import {TourCardFrontComponent} from "./tour-card/tour-card-front/tour-card-front.component";
-import {TourCardBackComponent} from "./tour-card/tour-card-back/tour-card-back.component";
 import {ButtonComponent, SectionHeadingComponent, SpinnerComponent} from "shared/components";
 import {provideToursService, ToursService} from "shared/services";
 import type {TourCardVM} from "shared/models";
