@@ -35,7 +35,15 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler(exHandlerBuilder =>
+    {
+        exHandlerBuilder.Run(async context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(new { error = Error.Internal });
+        });
+    });
+    
     app.UseHsts();
 }
 

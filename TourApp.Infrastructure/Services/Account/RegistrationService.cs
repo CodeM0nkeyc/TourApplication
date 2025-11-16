@@ -1,7 +1,4 @@
-﻿using TourApp.Application.Models.Result;
-using TourApp.Application.Services;
-
-namespace TourApp.Infrastructure.Services.Account;
+﻿namespace TourApp.Infrastructure.Services.Account;
 
 public class RegistrationService : IRegistrationService
 {
@@ -15,13 +12,13 @@ public class RegistrationService : IRegistrationService
     private readonly IEmailService _emailService;
     private readonly IPasswordHashService _passwordHashService;
     private readonly IConfirmationGenerator _confirmationGenerator;
-    private readonly CountryService _countryService;
+    private readonly ICountryService _countryService;
 
     public RegistrationService(
         IUserRepository userRepository, IUserIdentityRepository userIdentityRepository, 
         IEmailService emailService, IPasswordHashService passwordHashService, 
         IConfirmationGenerator confirmationGenerator, IOptions<SenderSettings> senderSettings,
-        CountryService countryService)
+        ICountryService countryService)
     {
         _userRepository = userRepository;
         _userIdentityRepository = userIdentityRepository;

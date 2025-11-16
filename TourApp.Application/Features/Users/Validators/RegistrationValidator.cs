@@ -1,8 +1,10 @@
-﻿namespace TourApp.Application.Features.Users.Validators;
+﻿using TourApp.Application.Contracts.Services;
+
+namespace TourApp.Application.Features.Users.Validators;
 
 public class RegistrationValidator : AbstractValidator<RegistrationRequest>
 {
-    public RegistrationValidator(CountryService countryService)
+    public RegistrationValidator(ICountryService countryService)
     {
         string codePrefix = RegistrationErrors.Prefix;
 

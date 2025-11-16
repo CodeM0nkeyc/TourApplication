@@ -1,4 +1,4 @@
-﻿namespace TourApp.Application.Models;
+﻿namespace TourApp.Application.Models.Email;
 
 public record CodeConfirmation(
     string Email,

@@ -10,8 +10,6 @@ public static class ApplicationDiExtensions
         
         services.AddSingleton<TourSpecificationFactory>();
         services.AddSingleton<UserSpecificationFactory>();
-
-        services.AddSingleton<CountryService>();
         
         return services;
     }

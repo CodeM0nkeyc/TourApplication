@@ -1,8 +1,6 @@
-﻿using System.Text.Json;
+﻿namespace TourApp.Infrastructure.Services;
 
-namespace TourApp.Application.Services;
-
-public class CountryService
+public class CountryService : ICountryService
 {
     private const string _countryApiUrl = "https://countriesnow.space/api/v0.1/countries";
 

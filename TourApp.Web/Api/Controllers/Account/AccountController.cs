@@ -23,14 +23,26 @@ public class AccountController : ControllerBase
             new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-        AuthenticationProperties cookieProps = new AuthenticationProperties()
+        DateTimeOffset expireTime = DateTimeOffset.UtcNow.AddMonths(2);
+
+        CookieOptions authIndicatorCookieOpts = new CookieOptions()
         {
-            IsPersistent = true,
-            ExpiresUtc = DateTimeOffset.UtcNow.AddMonths(2)
+            IsEssential = true,
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Expires = expireTime
         };
 
+        AuthenticationProperties authCookieProps = new AuthenticationProperties()
+        {
+            IsPersistent = true,
+            ExpiresUtc = expireTime
+        };
+        
+        HttpContext.Response.Cookies.Append("Authenticated", "true", authIndicatorCookieOpts);
+
         return HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme, principal, cookieProps);
+            CookieAuthenticationDefaults.AuthenticationScheme, principal, authCookieProps);
     }
     
     [HttpGet("exists")]
@@ -38,7 +50,7 @@ public class AccountController : ControllerBase
     {
         bool userUnique = await _mediator.Send(new UserExistsQuery(email));
 
-        return Ok(userUnique);
+        return Ok(Result<bool>.Success(userUnique));
     }
     
     [HttpPost("login")]

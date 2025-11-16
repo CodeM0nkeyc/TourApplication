@@ -2,6 +2,7 @@
 
 global using System.Security.Cryptography;
 global using System.Text;
+global using System.Text.Json;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
@@ -22,5 +23,8 @@ global using TourApp.Infrastructure.Services.Security.Hashing.Contracts;
 global using MailKit.Net.Smtp;
 global using MimeKit;
 global using MimeKit.Text;
+global using TourApp.Application.Contracts.Services;
+global using TourApp.Application.Models.Result;
+global using TourApp.Infrastructure.Services;
 global using TourApp.Infrastructure.Services.Account;
 global using TourApp.Infrastructure.Services.Email;

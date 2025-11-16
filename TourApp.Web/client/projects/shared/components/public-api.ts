@@ -2,6 +2,7 @@ export * from "./src/header/header.component";
 export * from "./src/footer/footer.component";
 export * from "./src/button/button.component";
 export * from "./src/section-heading/section-heading.component";
+export * from "./src/global-error/global-error.component";
 
 export * from "./src/forms/common/base-data-input";
 export * from "./src/forms/common/base-data-input.model";

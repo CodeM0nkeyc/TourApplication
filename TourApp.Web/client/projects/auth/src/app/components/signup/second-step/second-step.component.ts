@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ButtonComponent, DataInputComponent, ValidationMessageComponent} from "shared/components";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StepComponentBase} from "../step-component-base";
-import {enterTrigger} from "../../auth.animations";
+import {enterTrigger} from "shared/animations";
 import {AppValidators, CoercionDirective} from "shared/validators";
 
 @Component({

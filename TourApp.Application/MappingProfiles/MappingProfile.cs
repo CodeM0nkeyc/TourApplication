@@ -8,6 +8,6 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.ImageSrc, opts => opts.MapFrom(src =>
                     src.Id + "/" + src.DisplayImageName));
 
-        CreateMap<AppUser, AppUserDto>().ReverseMap();
+        CreateMap<User, UserDto>().ReverseMap();
     }
 }

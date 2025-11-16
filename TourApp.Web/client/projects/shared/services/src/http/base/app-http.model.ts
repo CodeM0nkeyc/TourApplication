@@ -1,4 +1,4 @@
-export type ApiError = {
+export type ApiFailure = {
     code: string,
     description: string
 }
@@ -6,5 +6,5 @@ export type ApiError = {
 export type ApiResult<TResult = never> = {
     isSuccess: boolean;
     data: TResult;
-    errors: ApiError[] | null;
+    errors: ApiFailure[] | null;
 }

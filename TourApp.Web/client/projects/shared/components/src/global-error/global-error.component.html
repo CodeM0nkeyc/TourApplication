@@ -1,0 +1,8 @@
+@if (opened()) {
+  <div @enter class="global-error">
+    <button (click)="onClose($event)" class="global-error__close-btn">×</button>
+    <p class="global-error__message">
+      {{ error() }}
+    </p>
+  </div>
+}

@@ -1,7 +1,7 @@
-import {ApiError} from "shared/services";
+import {ApiFailure} from "shared/services";
 import {ValidationErrors} from "@angular/forms";
 
-export function fromApiErrors(errors: ApiError[] | null): ValidationErrors | null {
+export function fromApiFailures(errors: ApiFailure[] | null): ValidationErrors | null {
     if (!errors) {
         return null;
     }
@@ -11,7 +11,7 @@ export function fromApiErrors(errors: ApiError[] | null): ValidationErrors | nul
     return Object.fromEntries(errorEntries);
 }
 
-export function getSpecificErrorsFrom(source: ValidationErrors | null,
+export function getSpecificFailuresFrom(source: ValidationErrors | null,
                                       ...errorCodes: string[]): ValidationErrors | null {
     if (!source) {
         return null;

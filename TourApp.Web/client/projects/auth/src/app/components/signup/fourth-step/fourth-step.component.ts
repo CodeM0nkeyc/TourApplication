@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ButtonComponent, DataInputComponent, ValidationMessageComponent} from "shared/components";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StepComponentBase} from "../step-component-base";
-import {enterTrigger} from "../../auth.animations";
+import {enterTrigger} from "shared/animations";
 import {AppCrossValidators, AppValidators} from "shared/validators";
-import {RegistrationData, UsersService} from "shared/services";
+import {type RegistrationData, UsersService} from "shared/services";
 
 @Component({
     selector: 'auth-fourth-step',

@@ -8,34 +8,16 @@ public static class InfrastructureDiExtensions
         services.AddSingleton<IPasswordHashService, Pbkdf2PasswordHashService>();
         services.AddSingleton<IConfirmationGenerator, ConfirmationGenerator>();
         services.AddSingleton<IEmailService, EmailService>();
+        services.AddSingleton<ICountryService, CountryService>();
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IRegistrationService, RegistrationService>();
 
-        services.Configure<SmtpSettings>(opts =>
-        {
-            IConfigurationSection smtpSection = emailConfiguration.GetSection("SmtpSettings");
-            
-            opts.Host = smtpSection["Host"] 
-                        ?? throw new InvalidOperationException("Missing host");
-            opts.Port = int.Parse(smtpSection["Port"] 
-                                  ?? throw new InvalidOperationException("Missing port"));
-            
-            opts.Username = smtpSection["Username"] 
-                            ?? throw new InvalidOperationException("Missing username");
-            opts.Password = smtpSection["Password"] 
-                            ?? throw new InvalidOperationException("Missing password");
-        });
+        services.Configure<SmtpSettings>(
+            opts => emailConfiguration.GetSection("SmtpSettings").Bind(opts));
 
-        services.Configure<SenderSettings>(opts =>
-        {
-            IConfigurationSection senderSection = emailConfiguration.GetSection("SenderSettings");
-            
-            opts.FromAddress = senderSection["FromAddress"]
-                               ?? throw new InvalidOperationException("Missing sender address");
-            opts.FromName = senderSection["FromName"]
-                            ?? throw new InvalidOperationException("Missing sender name");
-        });
+        services.Configure<SenderSettings>(
+            opts => emailConfiguration.GetSection("SenderSettings").Bind(opts));
         
         return services;
     }

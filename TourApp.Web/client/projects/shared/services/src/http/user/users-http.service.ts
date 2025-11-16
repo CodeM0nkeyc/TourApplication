@@ -17,15 +17,13 @@ export class UsersHttpService extends AppHttpService {
     }
 
     public logIn(credentials: Credentials): Observable<ApiResult> {
-        const signInRequest = this.httpClient.post<ApiResult>(`${this.apiUrl}/login`, credentials)
-            .pipe(catchError(this.handleApiError));
+        const signInRequest = this.httpClient.post<ApiResult>(`${this.apiUrl}/login`, credentials);
 
         return signInRequest;
     }
 
     public registerUser(data: RegistrationData): Observable<ApiResult> {
-        const registrationRequest = this.httpClient.post<ApiResult>(`${this.apiUrl}/register`, data)
-            .pipe(catchError(this.handleApiError));
+        const registrationRequest = this.httpClient.post<ApiResult>(`${this.apiUrl}/register`, data);
 
         return registrationRequest;
     }
@@ -37,15 +35,14 @@ export class UsersHttpService extends AppHttpService {
 
         const existsRequest = this.httpClient.get<ApiResult<boolean>>(`${this.apiUrl}/exists`, {
             params: params
-        }).pipe(catchError(this.handleApiError));
+        });
 
         return existsRequest;
     }
 
     public sendConfirmationCode(confirmationCode: ConfirmationCode): Observable<ApiResult> {
         const confirmationRequest =
-            this.httpClient.post<ApiResult>(`${this.apiUrl}/confirm`, confirmationCode)
-                .pipe(catchError(this.handleApiError));
+            this.httpClient.post<ApiResult>(`${this.apiUrl}/confirm`, confirmationCode);
 
         return confirmationRequest;
     }

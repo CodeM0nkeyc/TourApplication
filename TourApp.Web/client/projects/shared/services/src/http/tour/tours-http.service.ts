@@ -4,7 +4,6 @@ import {QuerySettingsParserService} from "../../parsers/query-settings-parser.se
 import {map, Observable} from "rxjs";
 import {AppHttpService} from "../base/app-http-service";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "shared";
 
 @Injectable({
     providedIn: 'root'

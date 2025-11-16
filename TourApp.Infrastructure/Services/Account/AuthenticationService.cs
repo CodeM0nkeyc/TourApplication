@@ -1,6 +1,4 @@
-﻿using TourApp.Application.Models.Result;
-
-namespace TourApp.Infrastructure.Services.Account;
+﻿namespace TourApp.Infrastructure.Services.Account;
 
 public class AuthenticationService : IAuthenticationService
 {

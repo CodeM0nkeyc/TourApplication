@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ButtonComponent, DataInputComponent, ValidationMessageComponent} from "shared/components";
-import {AppValidators, fromApiErrors} from "shared/validators";
+import {AppValidators, fromApiFailures} from "shared/validators";
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {StepComponentBase} from "../step-component-base";
 import {UsersService} from "shared/services";
-import {enterTrigger} from "../../auth.animations";
+import {enterTrigger} from "shared/animations";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -54,7 +54,7 @@ export class ConfirmationComponent extends StepComponentBase {
             return super.submit();
         }
 
-        const errorObject = fromApiErrors(confirmResult.errors);
+        const errorObject = fromApiFailures(confirmResult.errors);
 
         this.form.controls.code.setErrors(errorObject);
 

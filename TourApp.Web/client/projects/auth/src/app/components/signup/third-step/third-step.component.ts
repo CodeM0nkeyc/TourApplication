@@ -2,9 +2,10 @@ import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@ang
 import {ButtonComponent, ListInputComponent, type ListInputValue, ValidationMessageComponent} from "shared/components";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StepComponentBase} from "../step-component-base";
-import {enterTrigger} from "../../auth.animations";
+import {enterTrigger} from "shared/animations";
 import {CountriesService} from "shared/services";
 import {AppValidators} from "shared/validators";
+import {FriendlyError} from "shared/models";
 
 @Component({
     selector: 'auth-third-step',
@@ -58,13 +59,23 @@ export class ThirdStepComponent extends StepComponentBase {
     }
 
     public override async ngOnInit(): Promise<void> {
-        await this._countriesService.loadCountriesAsync();
+        try {
+            await this._countriesService.loadCountriesAsync();
+        }
+        catch (e: any) {
+            throw new FriendlyError(
+                "Failed to load countries. Please, check your internet connection or try later", e);
+        }
 
         this.form.controls.country.valueChanges
             .subscribe(async country => {
                 if (country[0] !== "") {
-                    try{
+                    try {
                         await this._countriesService.loadRegionsAsync(country[0]);
+                    }
+                    catch(e: any) {
+                        throw new FriendlyError(
+                            "Failed to load regions. Please, check your internet connection or try later", e);
                     }
                     finally {
                         this.regionsAvailable.set(this.regions().size > 0);
@@ -88,6 +99,10 @@ export class ThirdStepComponent extends StepComponentBase {
 
                     try {
                         await this._countriesService.loadCitiesAsync(country, region[0]);
+                    }
+                    catch(e: any) {
+                        throw new FriendlyError(
+                            "Failed to load cities. Please, check your internet connection or try later", e);
                     }
                     finally {
                         this.citiesAvailable.set(this.cities().size > 0);

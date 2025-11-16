@@ -1,10 +1,14 @@
 ﻿import {ChangeDetectionStrategy, Component, HostBinding, inject} from '@angular/core';
 import {ButtonComponent, DataInputComponent, ValidationMessageComponent} from "shared/components";
 import {RouterLink} from "@angular/router";
-import {enterTrigger} from "../auth.animations";
+import {enterTrigger} from "shared/animations";
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
-import {AppValidators, fromApiErrors, getSpecificErrorsFrom} from "shared/validators";
-import {AUTH_ERR_CODES, Credentials, UsersService} from "shared/services";
+import {
+    AppValidators,
+    fromApiFailures,
+    getSpecificFailuresFrom
+} from "shared/validators";
+import {AUTH_ERR_CODES, type Credentials, UsersService} from "shared/services";
 
 @Component({
     selector: 'auth-signin',
@@ -50,10 +54,10 @@ export class SigninComponent {
                 return;
             }
 
-            const errorObject = fromApiErrors(logInResult.errors)!;
+            const errorObject = fromApiFailures(logInResult.errors)!;
 
-            const emailError = getSpecificErrorsFrom(errorObject, AUTH_ERR_CODES.email, AUTH_ERR_CODES.notConfirmed);
-            const passwordError = getSpecificErrorsFrom(errorObject, AUTH_ERR_CODES.password);
+            const emailError = getSpecificFailuresFrom(errorObject, AUTH_ERR_CODES.email, AUTH_ERR_CODES.notConfirmed);
+            const passwordError = getSpecificFailuresFrom(errorObject, AUTH_ERR_CODES.password);
 
             this.form.controls.email.setErrors(emailError);
             this.form.controls.password.setErrors(passwordError);

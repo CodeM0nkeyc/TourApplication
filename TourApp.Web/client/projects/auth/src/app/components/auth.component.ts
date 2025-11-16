@@ -3,6 +3,7 @@ import {WelcomeSectionComponent} from "./welcome-section/welcome-section.compone
 import {RouterOutlet} from "@angular/router";
 import {SpinnerComponent} from "shared/components";
 import {UsersService} from "shared/services";
+import {GlobalErrorComponent} from "shared/components";
 
 @Component({
     selector: 'auth-root',
@@ -10,7 +11,8 @@ import {UsersService} from "shared/services";
     imports: [
         WelcomeSectionComponent,
         RouterOutlet,
-        SpinnerComponent
+        SpinnerComponent,
+        GlobalErrorComponent
     ],
     templateUrl: './auth.component.html',
     styleUrl: './auth.component.scss'

@@ -1,12 +1,10 @@
-﻿using TourApp.Application.Services;
-
-namespace TourApp.Infrastructure.Extensions;
+﻿namespace TourApp.Infrastructure.Extensions;
 
 public static class RegistrationRequestExtensions
 {
     public static User CreateAppUser(
         this RegistrationRequest request, int confirmationCode, 
-        IPasswordHashService passwordHashService, CountryService countryService)
+        IPasswordHashService passwordHashService, ICountryService countryService)
     {
         byte[] passwordBytes = Encoding.ASCII.GetBytes(request.Password);
         byte[] salt = passwordHashService.GenerateSalt();

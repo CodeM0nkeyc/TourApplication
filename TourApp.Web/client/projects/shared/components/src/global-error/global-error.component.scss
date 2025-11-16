@@ -1,0 +1,37 @@
+@use "abstracts/variables" as *;
+
+:host {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  display: block;
+}
+
+.global-error {
+  width: 100%;
+  max-width: 50rem;
+  padding: 1rem 2rem;
+  color: $color-white;
+  background-color: $color-error;
+  border-radius: 3px;
+
+  &__close-btn {
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    color: $color-white;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    font-weight: 700;
+
+    &:hover {
+      color: $color-grey-light-2;
+    }
+  }
+
+  &__message {
+    font-size: 1.7rem;
+    overflow-wrap: break-word;
+  }
+}
