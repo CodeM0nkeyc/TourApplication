@@ -5,7 +5,7 @@ import {provideToursService, ToursService} from "shared/services";
 import type {TourCardVM} from "shared/models";
 import {
     ButtonComponent,
-    FooterComponent,
+    FooterComponent, GlobalErrorComponent,
     HeaderComponent,
     SectionHeadingComponent,
     SpinnerComponent
@@ -23,6 +23,7 @@ import {
         SectionHeadingComponent,
         FooterComponent,
         ButtonComponent,
+        GlobalErrorComponent,
     ],
     styleUrl: './catalog.component.scss',
     providers: [provideToursService(6)]

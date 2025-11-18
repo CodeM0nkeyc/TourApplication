@@ -12,19 +12,18 @@ public class ToursController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<TourDetailsDto>>> GetTours(
-        [FromQuery] TourQuerySettings settings)
+    public async Task<IActionResult> GetTours(
+        [FromQuery] TourQuerySettings settings, CancellationToken cancellationToken)
     {
-        Console.WriteLine(settings.ToString());
         GetToursQuery query = new GetToursQuery(settings);
-        IList<TourDetailsDto> data = await _mediator.Send(query);
+        Result<IList<TourDetailsDto>> data = await _mediator.Send(query, cancellationToken);
         return Ok(data);
     }
 
     [HttpGet("countries")]
-    public async Task<ActionResult<IList<string>>> GetTourCountries()
+    public async Task<IActionResult> GetTourCountries(CancellationToken cancellationToken)
     {
-        IList<string> countries = await _mediator.Send(new GetTourCountriesQuery());
+        Result<IList<string>> countries = await _mediator.Send(new GetTourCountriesQuery(), cancellationToken);
         return Ok(countries);
     }
 }

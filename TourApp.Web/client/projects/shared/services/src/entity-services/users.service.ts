@@ -1,9 +1,9 @@
 import {inject, Injectable, Signal, signal} from '@angular/core';
 import {UsersHttpService} from "../http/user/users-http.service";
 import {ConfirmationCode, Credentials, RegistrationData} from "../http/user/users-http.model";
-import {ApiResult} from "../http/base/app-http.model";
 import {lastValueFrom} from "rxjs";
 import {Notify} from "shared/utilities";
+import {Result} from "./base/result";
 
 @Injectable({
   providedIn: 'root'
@@ -18,28 +18,28 @@ export class UsersService {
     }
 
     @Notify("_isLoading")
-    public async logInAsync(credentials: Credentials): Promise<ApiResult> {
+    public async logInAsync(credentials: Credentials): Promise<Result> {
         const logInResult = lastValueFrom(this._usersHttpService.logIn(credentials));
 
         return logInResult;
     }
 
     @Notify("_isLoading")
-    public async registerAsync(registerData: RegistrationData): Promise<ApiResult> {
+    public async registerAsync(registerData: RegistrationData): Promise<Result> {
         const registerResult = lastValueFrom(this._usersHttpService.registerUser(registerData));
 
         return registerResult;
     }
 
     @Notify("_isLoading")
-    public async userExistsAsync(email: string): Promise<ApiResult<boolean>> {
+    public async userExistsAsync(email: string): Promise<Result<boolean>> {
         const existsResult = lastValueFrom(this._usersHttpService.userExists(email));
 
         return existsResult;
     }
 
     @Notify("_isLoading")
-    public async confirmEmailAsync(confirmationCode: ConfirmationCode): Promise<ApiResult> {
+    public async confirmEmailAsync(confirmationCode: ConfirmationCode): Promise<Result> {
         const confirmationResult = lastValueFrom(this._usersHttpService.sendConfirmationCode(confirmationCode));
 
         return confirmationResult;

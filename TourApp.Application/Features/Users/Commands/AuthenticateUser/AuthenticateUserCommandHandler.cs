@@ -12,6 +12,7 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
     public async Task<Result<AuthenticationResponse?>> Handle(
         AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
-        return await _authenticationService.AuthenticateWithPasswordAsync(request.AuthenticationRequest);
+        return await _authenticationService.AuthenticateWithPasswordAsync(
+            request.AuthenticationRequest, cancellationToken);
     }
 }

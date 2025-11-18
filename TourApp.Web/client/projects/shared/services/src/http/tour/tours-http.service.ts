@@ -4,6 +4,7 @@ import {QuerySettingsParserService} from "../../parsers/query-settings-parser.se
 import {map, Observable} from "rxjs";
 import {AppHttpService} from "../base/app-http-service";
 import {HttpClient} from "@angular/common/http";
+import {ApiResult} from "../base/app-http.model";
 
 @Injectable({
     providedIn: 'root'
@@ -15,12 +16,12 @@ export class ToursHttpService extends AppHttpService {
         super(httpClient);
     }
 
-    public getTours(EntityQuerySettings?: TourQuerySettings): Observable<TourCardVM[]> {
+    public getTours(EntityQuerySettings?: TourQuerySettings): Observable<ApiResult<TourCardVM[]>> {
         const params = this._queryParser.getQueryFromSettings(EntityQuerySettings);
         const response = this.httpClient.get(`${this.apiUrl}/tours`, {
             responseType: "text",
             params: params
-        }).pipe(map<string, TourCardVM[]>(response =>
+        }).pipe(map<string, ApiResult<TourCardVM[]>>(response =>
             JSON.parse(response, (key, value) => {
 
                 switch (key.toLowerCase()) {
@@ -37,8 +38,8 @@ export class ToursHttpService extends AppHttpService {
         return response;
     }
 
-    public getTourCountries(): Observable<string[]> {
-        const response = this.httpClient.get<string[]>(`${this.apiUrl}/tours/countries`);
+    public getTourCountries(): Observable<ApiResult<string[]>> {
+        const response = this.httpClient.get<ApiResult<string[]>>(`${this.apiUrl}/tours/countries`);
 
         return response;
     }

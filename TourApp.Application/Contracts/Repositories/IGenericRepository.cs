@@ -2,10 +2,11 @@
 
 public interface IGenericRepository<TEntity> : IUnitOfWork where TEntity: class
 {
-    public Task<TEntity?> GetAsync(Specification<TEntity>? specification);
-    public Task<IList<TEntity>> GetManyAsync(Specification<TEntity>? specification);
+    public Task<TEntity?> GetAsync(Specification<TEntity>? specification, CancellationToken cancellationToken);
+    public Task<IList<TEntity>> GetManyAsync(
+        Specification<TEntity>? specification, CancellationToken cancellationToken);
     
-    public Task<int> CountAsync(Specification<TEntity>? specification);
+    public Task<int> CountAsync(Specification<TEntity>? specification, CancellationToken cancellationToken);
     
     public Task AddAsync(TEntity entity);
 

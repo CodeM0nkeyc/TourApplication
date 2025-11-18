@@ -10,29 +10,32 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
-    public virtual async Task<TEntity?> GetAsync(Specification<TEntity>? specification)
+    public virtual async Task<TEntity?> GetAsync(
+        Specification<TEntity>? specification, CancellationToken cancellationToken = default)
     {
         var result = await dbContext.Set<TEntity>()
             .ApplySpecification(specification)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         return result;
     }
 
-    public virtual async Task<IList<TEntity>> GetManyAsync(Specification<TEntity>? specification)
+    public virtual async Task<IList<TEntity>> GetManyAsync(
+        Specification<TEntity>? specification, CancellationToken cancellationToken = default)
     {
         var result = await dbContext.Set<TEntity>()
             .ApplySpecification(specification)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return result;
     }
 
-    public async Task<int> CountAsync(Specification<TEntity>? specification)
+    public async Task<int> CountAsync(
+        Specification<TEntity>? specification, CancellationToken cancellationToken = default)
     {
         return await dbContext.Set<TEntity>()
             .ApplySpecification(specification)
-            .CountAsync();
+            .CountAsync(cancellationToken);
     }
 
     public virtual async Task AddAsync(TEntity entity)

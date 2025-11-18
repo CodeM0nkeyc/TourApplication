@@ -18,9 +18,10 @@ public class AuthenticationService : IAuthenticationService
                && password1.SequenceEqual(password2);
     }
     
-    public async Task<Result<AuthenticationResponse?>> AuthenticateWithPasswordAsync(AuthenticationRequest request)
+    public async Task<Result<AuthenticationResponse?>> AuthenticateWithPasswordAsync(
+        AuthenticationRequest request, CancellationToken cancellationToken = default)
     {
-        User? appUser = await _userRepository.GetByEmailAsync(request.Email);
+        User? appUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (appUser is null)
         {
@@ -37,6 +38,8 @@ public class AuthenticationService : IAuthenticationService
         byte[] requestPasswordBytes = Encoding.ASCII.GetBytes(request.Password);
         byte[] requestPasswordHash = _passwordHashService
             .ComputeHash(requestPasswordBytes, userIdentity.PasswordSalt);
+        
+        cancellationToken.ThrowIfCancellationRequested();
 
         if (!ComparePasswordBytes(requestPasswordHash, userIdentity.PasswordHash))
         {

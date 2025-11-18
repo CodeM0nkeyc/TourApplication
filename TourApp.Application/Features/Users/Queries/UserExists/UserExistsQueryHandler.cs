@@ -11,7 +11,7 @@ public class UserExistsQueryHandler : IRequestHandler<UserExistsQuery, bool>
     
     public async Task<bool> Handle(UserExistsQuery request, CancellationToken cancellationToken)
     {
-        bool exists = await _userIdentityRepository.ExistsAsync(request.Email);
+        bool exists = await _userIdentityRepository.ExistsAsync(request.Email, cancellationToken);
         
         return exists;
     }

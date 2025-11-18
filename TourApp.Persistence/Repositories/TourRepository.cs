@@ -7,11 +7,11 @@ public class TourRepository : GenericRepository<Tour>, ITourRepository
         
     }
 
-    public async Task<IList<string>> GetTourCountriesAsync()
+    public async Task<IList<string>> GetTourCountriesAsync(CancellationToken cancellationToken = default)
     {
         IList<string> result = await dbContext.Tours
             .Select(tour => tour.Country)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
         
         return result;
     }

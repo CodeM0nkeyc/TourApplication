@@ -40,12 +40,14 @@ if (!app.Environment.IsDevelopment())
         exHandlerBuilder.Run(async context =>
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsJsonAsync(new { error = Error.Internal });
+            await context.Response.WriteAsJsonAsync(Result.Failure(Error.Internal));
         });
     });
     
     app.UseHsts();
 }
+
+app.CatchOperationCancellations();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

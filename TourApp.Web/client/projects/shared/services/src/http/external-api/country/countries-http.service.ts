@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AppHttpService} from "../base/app-http-service";
+import {AppHttpService} from "../../base/app-http-service";
 import {map, Observable} from "rxjs";
 import {environment} from "shared";
 import {Cities, Countries, States} from "./countries-http.model";

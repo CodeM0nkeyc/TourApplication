@@ -11,7 +11,7 @@ public class AccountController : ControllerBase
         _mediator = mediator;
     }
 
-    private Task AssignAuthenticationCookie(AuthenticationResponse response)
+    private Task AssignAuthenticationCookieAsync(AuthenticationResponse response)
     {
         List<Claim> claims = new List<Claim>()
         {
@@ -46,27 +46,30 @@ public class AccountController : ControllerBase
     }
     
     [HttpGet("exists")]
-    public async Task<IActionResult> CheckIfExists([FromQuery] string email)
+    public async Task<IActionResult> CheckIfExists([FromQuery] string email, CancellationToken cancellationToken)
     {
-        bool userUnique = await _mediator.Send(new UserExistsQuery(email));
+        UserExistsQuery query = new UserExistsQuery(email);
+        bool userUnique = await _mediator.Send(query, cancellationToken);
 
         return Ok(Result<bool>.Success(userUnique));
     }
     
     [HttpPost("login")]
-    public async Task<IActionResult> LogIn(AuthenticationRequest request)
+    public async Task<IActionResult> LogIn(AuthenticationRequest request, CancellationToken cancellationToken)
     {
         if (HttpContext.User.Identity?.IsAuthenticated == true)
         {
             return Ok(Result.Success());
         }
+
+        AuthenticateUserCommand command = new AuthenticateUserCommand(request);
             
         Result<AuthenticationResponse?> authenticationResult = 
-            await _mediator.Send(new AuthenticateUserCommand(request));
+            await _mediator.Send(command, cancellationToken);
 
         if (authenticationResult.IsSuccess)
         {
-            await AssignAuthenticationCookie(authenticationResult.Data!);
+            await AssignAuthenticationCookieAsync(authenticationResult.Data!);
 
             return Ok(authenticationResult);
         }

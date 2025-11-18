@@ -13,25 +13,25 @@ public class UserIdentityRepository : IUserIdentityRepository
         _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
     
-    public async Task<UserIdentity?> GetByIdAsync(int id)
+    public async Task<UserIdentity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         UserIdentity? userIdentity = await _dbContext.UserIdentities
-            .FirstOrDefaultAsync(identity => identity.Id == id);
+            .FirstOrDefaultAsync(identity => identity.Id == id, cancellationToken);
 
         return userIdentity;
     }
 
-    public async Task<UserIdentity?> GetByEmailAsync(string email)
+    public async Task<UserIdentity?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
         UserIdentity? userIdentity = await _dbContext.UserIdentities
-            .FirstOrDefaultAsync(identity => identity.Email == email);
+            .FirstOrDefaultAsync(identity => identity.Email == email, cancellationToken);
 
         return userIdentity;
     }
 
-    public async Task<bool> ExistsAsync(string email)
+    public async Task<bool> ExistsAsync(string email, CancellationToken cancellationToken = default)
     {
-        bool exists = await _dbContext.UserIdentities.AnyAsync(identity => identity.Email == email);
+        bool exists = await _dbContext.UserIdentities.AnyAsync(identity => identity.Email == email, cancellationToken);
         
         return exists;
     }

@@ -1,9 +1,6 @@
-﻿using TourApp.Application.Features.Tours.Contracts;
-using TourApp.Application.Features.Tours.Contracts.Repositories;
+﻿namespace TourApp.Application.Features.Tours.Queries.GetTours;
 
-namespace TourApp.Application.Features.Tours.Queries.GetTours;
-
-public class GetToursQueryHandler : IRequestHandler<GetToursQuery, IList<TourDetailsDto>>
+public class GetToursQueryHandler : IRequestHandler<GetToursQuery, Result<IList<TourDetailsDto>>>
 {
     private readonly ITourRepository _tourRepository;
     private readonly IMapper _mapper;
@@ -19,10 +16,15 @@ public class GetToursQueryHandler : IRequestHandler<GetToursQuery, IList<TourDet
         _specificationFactory = specificationFactory;
     }
     
-    public async Task<IList<TourDetailsDto>> Handle(GetToursQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<TourDetailsDto>>> Handle(GetToursQuery request, CancellationToken cancellationToken)
     {
         Specification<Tour>? spec = _specificationFactory.CreateSpecification(request.Settings);
-        IList<Tour> tours = await _tourRepository.GetManyAsync(spec);
-        return _mapper.Map<IList<TourDetailsDto>>(tours);
+        
+        cancellationToken.ThrowIfCancellationRequested();
+        
+        IList<Tour> tours = await _tourRepository.GetManyAsync(spec, cancellationToken);
+        IList<TourDetailsDto> tourDtos = _mapper.Map<IList<TourDetailsDto>>(tours);
+
+        return Result<IList<TourDetailsDto>>.Success(tourDtos)!;
     }
 }

@@ -55,8 +55,8 @@ export class FilterPanelComponent implements OnInit {
         });
     }
 
-    public ngOnInit(): void {
-        this._toursService.loadTourCountries();
+    public async ngOnInit(): Promise<void> {
+        await this._toursService.loadTourCountriesAsync();
     }
 
     public async onSubmit(event: Event): Promise<void> {

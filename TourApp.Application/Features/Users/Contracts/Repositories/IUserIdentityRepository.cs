@@ -1,13 +1,11 @@
-﻿using TourApp.Application.Contracts.Repositories;
-
-namespace TourApp.Application.Features.Users.Contracts.Repositories;
+﻿namespace TourApp.Application.Features.Users.Contracts.Repositories;
 
 public interface IUserIdentityRepository : IUnitOfWork
 {
-    public Task<UserIdentity?> GetByIdAsync(int id);
-    public Task<UserIdentity?> GetByEmailAsync(string email);
+    public Task<UserIdentity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    public Task<UserIdentity?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
 
-    public Task<bool> ExistsAsync(string email);
+    public Task<bool> ExistsAsync(string email, CancellationToken cancellationToken = default);
     
     public void Update(UserIdentity userIdentity);
     public void Update(UserIdentity userIdentity, params string[] props);
