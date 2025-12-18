@@ -21,6 +21,7 @@ global using TourApp.Infrastructure.Services.Security.Generator.Contracts;
 global using TourApp.Infrastructure.Services.Security.Hashing;
 global using TourApp.Infrastructure.Services.Security.Hashing.Contracts;
 global using MailKit.Net.Smtp;
+global using Microsoft.Extensions.Logging;
 global using MimeKit;
 global using MimeKit.Text;
 global using TourApp.Application.Contracts.Services;

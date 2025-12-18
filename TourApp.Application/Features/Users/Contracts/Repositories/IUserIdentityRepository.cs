@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Features.Users.Contracts.Repositories;
 
-public interface IUserIdentityRepository : IUnitOfWork
+public interface IUserIdentityRepository
 {
     public Task<UserIdentity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     public Task<UserIdentity?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
@@ -11,4 +11,6 @@ public interface IUserIdentityRepository : IUnitOfWork
     public void Update(UserIdentity userIdentity, params string[] props);
     
     public void SetConfirmationCode(UserIdentity userIdentity, ConfirmationCode? confirmationCode);
+
+    public Task SaveAsync();
 }

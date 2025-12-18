@@ -2,8 +2,10 @@
 
 public static class MiddlewareExtensions
 {
-    public static IApplicationBuilder CatchOperationCancellations(this IApplicationBuilder app)
+    public static WebApplication CatchOperationCancellations(this WebApplication app)
     {
-        return app.UseMiddleware<OperationCancelledHandlerMiddleware>();
+        app.UseMiddleware<OperationCancelledHandlerMiddleware>();
+        
+        return app;
     }
 }

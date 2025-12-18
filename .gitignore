@@ -2,6 +2,7 @@
 CoreTests
 TourApp.sln.DotSettings.user
 **/.idea
+**/appsettings.Production.js
 
 # Build results
 **/[Dd]ebug/

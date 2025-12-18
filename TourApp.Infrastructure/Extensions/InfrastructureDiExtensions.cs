@@ -5,6 +5,8 @@ public static class InfrastructureDiExtensions
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration emailConfiguration)
     {
+        services.AddLogging();
+        
         services.AddSingleton<IPasswordHashService, Pbkdf2PasswordHashService>();
         services.AddSingleton<IConfirmationGenerator, ConfirmationGenerator>();
         services.AddSingleton<IEmailService, EmailService>();

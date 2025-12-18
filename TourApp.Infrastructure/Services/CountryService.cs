@@ -2,12 +2,14 @@
 
 public class CountryService : ICountryService
 {
+    private readonly ILogger<CountryService> _logger;
     private const string _countryApiUrl = "https://countriesnow.space/api/v0.1/countries";
 
     private Dictionary<string, string> _countriesWithDialCodes = null!;
 
-    public CountryService()
+    public CountryService(ILogger<CountryService> logger)
     {
+        _logger = logger;
         LoadCountriesWithDialCodesAsync().Wait();
     }
 
@@ -24,6 +26,7 @@ public class CountryService : ICountryService
         }
         catch
         {
+            _logger.LogError("Failed to load countries.");
             _countriesWithDialCodes = new Dictionary<string, string>();
         }
     }
@@ -46,14 +49,6 @@ public class CountryService : ICountryService
         }
 
         return result;
-    }
-
-    public static async Task<CountryService> CreateAsync()
-    {
-        CountryService service = new CountryService();
-        await service.LoadCountriesWithDialCodesAsync();
-        
-        return service;
     }
 
     public bool IsCountryAvailable(string countryName)

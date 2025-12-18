@@ -33,21 +33,21 @@ builder.Services.Configure<JsonOptions>(opts =>
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+app.UseExceptionHandler(exHandlerBuilder =>
 {
-    app.UseExceptionHandler(exHandlerBuilder =>
+    exHandlerBuilder.Run(async context =>
     {
-        exHandlerBuilder.Run(async context =>
-        {
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsJsonAsync(Result.Failure(Error.Internal));
-        });
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        await context.Response.WriteAsJsonAsync(Result.Failure(Error.Internal));
     });
-    
-    app.UseHsts();
-}
+});
 
 app.CatchOperationCancellations();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

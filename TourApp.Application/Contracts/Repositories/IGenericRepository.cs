@@ -1,6 +1,6 @@
 ﻿namespace TourApp.Application.Contracts.Repositories;
 
-public interface IGenericRepository<TEntity> : IUnitOfWork where TEntity: class
+public interface IGenericRepository<TEntity> where TEntity: class
 {
     public Task<TEntity?> GetAsync(Specification<TEntity>? specification, CancellationToken cancellationToken);
     public Task<IList<TEntity>> GetManyAsync(
@@ -15,4 +15,6 @@ public interface IGenericRepository<TEntity> : IUnitOfWork where TEntity: class
     public void Update(TEntity entity, params string[] props);
 
     public void Delete(TEntity entity);
+
+    public Task SaveAsync();
 }

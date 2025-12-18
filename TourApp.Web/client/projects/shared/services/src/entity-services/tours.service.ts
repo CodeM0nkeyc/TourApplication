@@ -73,9 +73,9 @@ export class ToursService {
             this._requestPageIndex = 0;
         }
 
-        const futureToursLength = this._pageSize * (this._viewPageIndex + 1);
+        const futurePageLength = this._pageSize * (this._viewPageIndex + 1);
 
-        if (!preserveOld || this._loadedTours().length - futureToursLength <= 0) {
+        if (!preserveOld || this._loadedTours().length - futurePageLength <= 0) {
             this._filterSettings.pageIndex = this._requestPageIndex;
 
             let tours = await this._loadToursAsync(this._filterSettings);
@@ -83,12 +83,13 @@ export class ToursService {
             this._loadedTours.update(oldArr =>
                 preserveOld ? [...oldArr, ...tours] : tours);
 
-            this._isLastDataLoaded.set(this._loadedTours().length - futureToursLength <= 0)
+            this._isLastDataLoaded.set(this._loadedTours().length - futurePageLength <= 0)
+
             this._requestPageIndex++;
         }
 
         this._tours.set(this._loadedTours()
-            .slice(0, futureToursLength));
+            .slice(0, futurePageLength));
 
         this._viewPageIndex++;
     }
